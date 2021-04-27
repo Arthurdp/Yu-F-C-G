@@ -42,8 +42,8 @@ calculo1 = Monstro 44 "calculo I" 900 850 True
 calculo2 :: Carta
 calculo2 = Monstro 45 "calculo II" 1300 1000 True
 
-Haskell :: Carta
-Haskell  = Monstro 46 "Aprender Haskell" 1500 1200 True
+haskell :: Carta
+haskell  = Monstro 46 "Aprender Haskell" 1500 1200 True
 
 sono :: Carta
 sono  = Monstro 47 "Sono na aula" 1100 1000 True
