@@ -42,8 +42,8 @@ calculo1 = Monstro 44 "calculo I" 900 850 True
 calculo2 :: Carta
 calculo2 = Monstro 45 "calculo II" 1300 1000 True
 
-provas3 :: Carta
-provas3  = Monstro 46 "3 provas no mesmo dia" 1500 1200 True
+Haskell :: Carta
+Haskell  = Monstro 46 "Aprender Haskell" 1500 1200 True
 
 sono :: Carta
 sono  = Monstro 47 "Sono na aula" 1100 1000 True
@@ -78,6 +78,26 @@ ressaca = Monstro 55 "Ir para a aula de ressaca" 2100 2200 True
 
 trabalhoGrupo :: Carta
 trabalhoGrupo = Monstro 56 "Trabalho em grupo" 2150 2400 True
+
+treta :: Carta
+treta = Monstro 57 "Treta no lcc2" 2250 2200 True
+
+pcQuebrado :: Carta
+pcQuebrado = Monstro 58 "Seu Pc quebrou, poxa" 2455 2500 True
+
+provas3 :: Carta
+provas3  = Monstro 59 "3 provas no mesmo dia" 2500 2450 True
+
+--Cartas Monstro 9 periodo
+
+colacao :: Carta
+colacao = Monstro 60 "colação de grau " 2700 2450 True
+
+formaturaCara :: Carta
+formaturaCara = Monstro 61 "formatura o zoi da Cara" 2800 2600 True
+
+
+
 
 
 
