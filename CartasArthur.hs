@@ -1,128 +1,141 @@
-data Carta = Carta {
-    id :: Int,
-    nome :: String,
-    ataque :: Int,
-    defesa :: Int,
-    modoAtaque :: Bool,
-    tipo :: String
-} deriving (Show)
+module CartasArthur where
 
+type Id = Int
+type Nome = String
+type Ataque = Int
+type Defesa = Int
+type ModoAtaque = Bool
+type Equips = [Carta]
+
+data Carta = Equipamento Id Nome Ataque Defesa | Aluno Id Nome Ataque Defesa ModoAtaque Equips | Monstro Id Nome Ataque Defesa ModoAtaque | Vazia Id
+ deriving (Show)
+
+selecId :: Carta -> Int
+selecId (Equipamento id _ _ _) = id
+selecId (Aluno id _ _ _ _ _) = id
+selecId (Monstro id _ _ _ _) = id
+selecId (Vazia id) = id
+
+--Carta vazia
+
+cartaVazia :: Carta
+cartaVazia = Vazia 00
 
 --Cartas Tipo Equipamento de Aluno
 
 colinha :: Carta
-colinha = Carta 34 "Colinha" 400 400 True "Equip"
+colinha = Equipamento 34 "Colinha" 400 400 
 
 virote :: Carta
-virote = Carta 35 "Virote" 600 100 True "Equip"
+virote = Equipamento 35 "Virote" 600 100 
 
 dicaProf :: Carta
-dicaProf = Carta 36 "Dica do professor na prova" 1000 1000 True "Equip"
+dicaProf = Equipamento 36 "Dica do professor na prova" 1000 1000 
 
 --Cartas Tipo Aluno
 
 aluno1Periodo :: Carta
-aluno1Periodo = Carta 1 "Aluno do primeiro período" 600 400 True "Aluno"
+aluno1Periodo = Aluno 01 "Aluno do primeiro período" 500 400 True []
 
 aluno2Periodo :: Carta
-aluno2Periodo = Carta 2 "Aluno do Segundo período" 600 400 True "Aluno"
+aluno2Periodo = Aluno 02 "Aluno do Segundo período" 700 500 True []
 
 aluno3Periodo :: Carta
-aluno3Periodo = Carta 3 "Aluno do Terceiro período" 600 400 True "Aluno"
+aluno3Periodo = Aluno 03 "Aluno do Terceiro período" 1000 800 True []
 
 aluno4Periodo :: Carta
-aluno4Periodo = Carta 4 "Aluno do Quarto período" 600 400 True "Aluno"
+aluno4Periodo = Aluno 04 "Aluno do Quarto período" 1200 1000 True []
 
 aluno5Periodo :: Carta
-aluno5Periodo = Carta 5 "Aluno do Quinto período" 600 400 True "Aluno"
+aluno5Periodo = Aluno 05 "Aluno do Quinto período" 1500 1400 True []
 
 aluno6Periodo :: Carta
-aluno6Periodo = Carta 6 "Aluno do Sexto período" 600 400 True "Aluno"
+aluno6Periodo = Aluno 06 "Aluno do Sexto período" 1700 1500 True []
 
 aluno7Periodo :: Carta
-aluno7Periodo = Carta 7 "Aluno do Sétimo período" 600 400 True "Aluno"
+aluno7Periodo = Aluno 07 "Aluno do Sétimo período" 2000 1800 True []
 
 aluno8Periodo :: Carta
-aluno8Periodo = Carta 8 "Aluno do Oitavo período" 600 400 True "Aluno"
+aluno8Periodo = Aluno 08 "Aluno do Oitavo período" 2200 1900 True []
 
 aluno9Periodo :: Carta
-aluno9Periodo = Carta 9 "Aluno do Nono período" 600 400 True "Aluno"
+aluno9Periodo = Aluno 09 "Aluno do Nono período" 2500 2100 True []
 
 alunoFormado :: Carta
-alunoFormado = Carta 10 "Aluno formado, o mais Poderoso" 600 400 True "Aluno"
+alunoFormado = Aluno 10 "Aluno formado, o mais Poderoso" 2700 2500 True []
 
 --Cartas Monstro 1 2 periodo
 
 repProgramacao1 :: Carta
-repProgramacao1 = Carta 12 "Reposição Programação 1" 700 500 True "Monstro"
+repProgramacao1 = Monstro 12 "Reposição Programação 1" 700 500 True
 
 programacao2 :: Carta
-programacao2 = Carta 13 "Programação 2" 800 500 True "Monstro"
+programacao2 = Monstro 13 "Programação 2" 800 500 True
 
 repProgramacao2 :: Carta
-repProgramacao2 = Carta 14 "Reposição Programação 2" 900 600 True "Monstro"
+repProgramacao2 = Monstro 14 "Reposição Programação 2" 900 600 True
 
 monitorProgramacao1 :: Carta
-monitorProgramacao1 = Carta 15 "Monitor de Programação 1" 800 400 True "Monstro"
+monitorProgramacao1 = Monstro 15 "Monitor de Programação 1" 800 400 True
 
 monitorProgramacao2 :: Carta
-monitorProgramacao2 = Carta 16 "Monitor de Programação 2" 800 400 True "Monstro"
+monitorProgramacao2 = Monstro 16 "Monitor de Programação 2" 1000 400 True
 
 --Cartas Monstro 3 4 periodo
 
 linear :: Carta
-linear = Carta 17 "Algebra Linear" 1300 800 True "Monstro"
+linear = Monstro 17 "Algebra Linear" 1300 800 True
 
 eda :: Carta
-eda = Carta 18 "EDA" 1200 1000 True "Monstro"
+eda = Monstro 18 "EDA" 1200 1000 True
 
 repEDA :: Carta
-repEDA = Carta 19 "Reposição de EDA (Dalba não perdoará)" 1500 1200 True "Monstro"
+repEDA = Monstro 19 "Reposição de EDA (Dalba não perdoará)" 1200 1500 True
 
 leda :: Carta
-leda = Carta 20 "LEDA" 1200 1000 True "Monstro"
+leda = Monstro 20 "LEDA" 1200 1000 True
 
 repLEDA :: Carta
-repLEDA = Carta 21 "Reposição de LEDA (Tá ferrado)" 1500 1200 True "Monstro"
+repLEDA = Monstro 21 "Reposição de LEDA (Tá ferrado)" 1200 1500 True
 
 --Cartas Monstro 5 6 periodo
 
 estatistica :: Carta
-estatistica = Carta 22 "Estatística Aplicada" 1600 1000 True "Monstro"
+estatistica = Monstro 22 "Estatística Aplicada" 1600 1000 True
 
 engenhariaSoft :: Carta
-engenhariaSoft = Carta 23 "Engenharia de Software" 1700 1300 True "Monstro"
+engenhariaSoft = Monstro 23 "Engenharia de Software" 1700 1300 True
 
 repEstatistica :: Carta
-repEstatistica = Carta 24 "Reposição de Estatística Aplicada" 1700 1000 True "Monstro"
+repEstatistica = Monstro 24 "Reposição de Estatística Aplicada" 1700 1000 True
 
 repEngenhariaSoft :: Carta
-repEngenhariaSoft = Carta 25 "Reposição de Engenharia de Software" 1800 1300 True "Monstro"
+repEngenhariaSoft = Monstro 25 "Reposição de Engenharia de Software" 1800 1300 True
 
 iA :: Carta
-iA = Carta 26 "Inteligência Artificial" 1800 1700 True "Monstro"
+iA = Monstro 26 "Inteligência Artificial" 1800 1700 True
 
 --Cartas Monstro 7 8 periodo
 
 compiladores :: Carta
-compiladores = Carta 27 "Compiladores" 2000 1500 True "Monstro"
+compiladores = Monstro 27 "Compiladores" 2000 1500 True
 
 projetoEmComputacao1 :: Carta
-projetoEmComputacao1 = Carta 28 "Projeto em computação 1" 2500 2000 True "Monstro"
+projetoEmComputacao1 = Monstro 28 "Projeto em computação 1" 2500 2000 True
 
 estagio :: Carta
-estagio = Carta 29 "Estágio" 2400 1500 True "Monstro"
+estagio = Monstro 29 "Estágio" 2400 1500 True
 
 repCompiladores :: Carta
-repCompiladores = Carta 30 "Reposição de Compiladores" 2200 1500 True "Monstro"
+repCompiladores = Monstro 30 "Reposição de Compiladores" 2200 1500 True
 
 --Cartas Monstro 9 periodo
 
 tcc :: Carta
-tcc = Carta 31 "Compiladores" 3000 2500 True "Monstro"
+tcc = Monstro 31 "Compiladores" 1000 3000 True 
 
 projetoEmComputacao2 :: Carta
-projetoEmComputacao2 = Carta 32 "Projeto em computação 2" 2700 2000 True "Monstro"
+projetoEmComputacao2 = Monstro 32 "Projeto em computação 2" 2700 2000 True 
 
 emprego :: Carta
-emprego = Carta 33 "Emprego" 2900 2500 True "Monstro"
+emprego = Monstro 33 "Emprego" 2900 2500 True
