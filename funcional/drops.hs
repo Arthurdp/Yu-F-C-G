@@ -1,7 +1,8 @@
+
 import Cartas
 
 drops1 :: [Carta]
-drops1 = [sePerdeu, python, fmcc1, fmcc2]
+drops1 = [sePerdeu, python, fmcc1, fmcc2,calculo1]
 
 drops2 :: [Carta]
 drops2 = []
@@ -28,5 +29,15 @@ drops9 :: [Carta]
 drops9 = []
 
 dropar :: [Carta] -> Carta
-dropar = do
+dropar lista = do 
+  let x = geraDeckEmbaralhado lista
+  dropar1 x
+  
+dropar1 :: [Carta] -> Carta
+dropar1 (x:xs) = x
+  
+
+
+
+
 
