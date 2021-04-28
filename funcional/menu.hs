@@ -1,12 +1,4 @@
 
-menuNome :: IO()
-menuNome = do
-    putStrLn "\n\n "
-    putStrLn "\n\nNome do jogador: "
-    a <- getLine
-    putStrLn "\n\n "
-    print( "\n\nNome do jogador: " ++ a)
-
 printLogo :: IO()
 printLogo = do
     putStrLn "  Y88b   d88P                   8888888888         d8888b              d8888b"
@@ -19,19 +11,31 @@ printLogo = do
     putStrLn "      888       'Y88888         888                'Y8888P'           'Y8888P88'"
 
 
+menuNome :: IO()
+menuNome = do
+    putStrLn "\n\n "
+    putStrLn "\n\nNome do jogador: "
+    a <- getLine
+    putStrLn "\n\n "
+    print( "Bem vindo " ++ a)
+    menu(Jogador a)
 
 
-menu :: jogador -> IO()
+menu :: Jogador -> IO()
 menu p =  do
-                putStrLn "\n              #   Menu   #\n\n\n"
+                putStrLn "\n\n "
+                putStrLn "\n #   Menu   #\n"
+                putStrLn "\n\n "
                 putStrLn "[1] -> Iniciar jogo"
                 putStrLn "[2] -> Deck"
                 putStrLn "[3] -> Status do jogador"
                 putStrLn "[4] -> Sair"
-                putStr "\n\nDigite sua opção: "
-                readLn :: IO()
+                putStrLn "\n\n "
+                putStrLn "\n\nDigite sua escolha: "
+                opcao <- getLine
 
-menuDeck :: jogador -> IO()
+
+menuDeck :: Jogador -> IO()
 menuDeck p =  do
                 putStrLn "\n           #   Deck   #\n\n\n"
                 putStrLn "[1] -> Coleção"
@@ -40,14 +44,14 @@ menuDeck p =  do
                 putStr "\n\nDigite sua opção: "
                 readLn :: IO()
 
-menuColecao :: jogador -> IO()
+menuColecao :: Jogador -> IO()
 menuColecao  p =  do
                 putStrLn "\n           #   Deck   #\n\n\n"
                 putStrLn "[1] -> Adicionar cartas ao deck"
                 putStrLn "[2] -> Sair"
 
 
-menuIniciar :: jogador -> IO()
+menuIniciar :: Jogador -> IO()
 menuIniciar p =  do
                 putStrLn "\n              #   Modo de jogo   #\n\n\n"
                 putStrLn "[1] -> Campanha"
@@ -56,11 +60,11 @@ menuIniciar p =  do
                 putStr "\n\nDigite sua opção: "
                 readLn :: IO()
 
-menuCampanha:: jogador -> IO()
+menuCampanha:: Jogador -> IO()
 menuCampanha p = do
 
 
-menuDuelo:: jogador -> IO()
+menuDuelo:: Jogador -> IO()
 menuDuelo p = do
 
 
