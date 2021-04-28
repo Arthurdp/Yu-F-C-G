@@ -34,14 +34,14 @@ menu = do
     putStrLn "\n\n "
     putStrLn "\n\nDigite sua escolha: "
 
-menuColecao :: Jogador -> IO()
-menuColecao  p =  do
+menuDeck :: IO()
+menuDeck  p =  do
                 putStrLn "\n          #   Deck   #\n\n\n"
                 putStrLn "[1] -> Adicionar cartas ao deck"
                 putStrLn "[2] -> Sair"
 
 
-menuIniciar :: Jogador -> IO()
+menuIniciar :: IO()
 menuIniciar p =  do
                 putStrLn "\n              #   Modo de jogo   #\n\n\n"
                 putStrLn "[1] -> Campanha"
@@ -50,11 +50,11 @@ menuIniciar p =  do
                 putStr "\n\nDigite sua opção: "
 
 
-menuCampanha:: Jogador -> IO()
+menuCampanha:: IO()
 menuCampanha p = do
 
 
-menuDuelo:: Jogador -> IO()
+menuDuelo:: IO()
 menuDuelo p = do
 
 
