@@ -2,7 +2,7 @@ module Cartas where
 
 data Carta = Carta {
     iD :: Int,
-    nome :: String,
+    nomeCarta :: String,
     ataque :: Int,
     defesa :: Int,
     modoAtaque :: Bool

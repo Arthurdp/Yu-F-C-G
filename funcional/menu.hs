@@ -9,6 +9,7 @@ printLogo = do
     putStrLn "      888      888   888 888888 888     888888    888    888  888888 888    888"
     putStrLn "      888      Y88b  888        888               Y88b  d88P         Y88b  d88P"
     putStrLn "      888       'Y88888         888                'Y8888P'           'Y8888P88'"
+    menuNome
 
 
 menuNome :: IO()
@@ -18,35 +19,24 @@ menuNome = do
     a <- getLine
     putStrLn "\n\n "
     print( "Bem vindo " ++ a)
-    menu(Jogador a)
+    menu
 
 
-menu :: Jogador -> IO()
-menu p =  do
-                putStrLn "\n\n "
-                putStrLn "\n #   Menu   #\n"
-                putStrLn "\n\n "
-                putStrLn "[1] -> Iniciar jogo"
-                putStrLn "[2] -> Deck"
-                putStrLn "[3] -> Status do jogador"
-                putStrLn "[4] -> Sair"
-                putStrLn "\n\n "
-                putStrLn "\n\nDigite sua escolha: "
-                opcao <- getLine
-
-
-menuDeck :: Jogador -> IO()
-menuDeck p =  do
-                putStrLn "\n           #   Deck   #\n\n\n"
-                putStrLn "[1] -> Coleção"
-                putStrLn "[2] -> Remover cartas do deck"
-                putStrLn "[3] -> Sair"
-                putStr "\n\nDigite sua opção: "
-                readLn :: IO()
+menu :: IO()
+menu = do
+    putStrLn "\n\n "
+    putStrLn "\n #   Menu   #\n"
+    putStrLn "\n\n "
+    putStrLn "[1] -> Iniciar jogo"
+    putStrLn "[2] -> Deck"
+    putStrLn "[3] -> Status do jogador"
+    putStrLn "[4] -> Sair"
+    putStrLn "\n\n "
+    putStrLn "\n\nDigite sua escolha: "
 
 menuColecao :: Jogador -> IO()
 menuColecao  p =  do
-                putStrLn "\n           #   Deck   #\n\n\n"
+                putStrLn "\n          #   Deck   #\n\n\n"
                 putStrLn "[1] -> Adicionar cartas ao deck"
                 putStrLn "[2] -> Sair"
 
@@ -58,7 +48,7 @@ menuIniciar p =  do
                 putStrLn "[2] -> Duelo livre"
                 putStrLn "[3] -> Sair"
                 putStr "\n\nDigite sua opção: "
-                readLn :: IO()
+
 
 menuCampanha:: Jogador -> IO()
 menuCampanha p = do
