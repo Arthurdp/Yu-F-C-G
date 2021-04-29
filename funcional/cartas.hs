@@ -61,6 +61,7 @@ monitorProgramacao1 = Carta 15 "Monitor de Programação 1" 800 400 True
 monitorProgramacao2 :: Carta
 monitorProgramacao2 = Carta 16 "Monitor de Programação 2" 1000 400 True
 
+
 --Cartas 3 4 periodo
 
 calculo2 :: Carta
@@ -230,5 +231,6 @@ insonia = Carta 110 "Insônia" 2700 2500 True
 
 jacare :: Carta
 jacare = Carta 110 "Jacaré" 2800 2700 True 
+
 
 
