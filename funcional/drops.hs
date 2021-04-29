@@ -42,14 +42,14 @@ drops4 = dropar [calculo2, haskell, sono, colaErrada, grafos, linear, eda, repED
 drops5 :: Carta
 drops5 = dropar [crise, ead, prazo, optativasDo6, perdido, estatistica, engenhariaSoft, repEstatistica, repEngenhariaSoft,
  iA, pato, gato, cachorro, metodologiaCientifica, wifi, desmotivacao, 
- depressao, cachaca, ritalina, Queridinho, resiliente, odio, ressaca, trabalhoGrupo, treta]
+ depressao, cachaca, ritalina, queridinho, resiliente, odio, ressaca, trabalhoGrupo, treta]
 
 -- 70% 30%
 -- 5,6 e 7,8
 drops6 :: Carta
 drops6 = dropar [crise, ead, prazo, optativasDo6, perdido, estatistica, engenhariaSoft, repEstatistica, repEngenhariaSoft,
  iA, pato, gato, cachorro, metodologiaCientifica, wifi, desmotivacao, 
- depressao, cachaca, ritalina, Queridinho, resiliente, odio, ressaca, trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1, estagio, 
+ depressao, cachaca, ritalina, queridinho, resiliente, odio, ressaca, trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1, estagio, 
  repCompiladores, sorte]
 
 -- 90% 10%
