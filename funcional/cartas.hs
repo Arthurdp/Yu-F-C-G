@@ -1,8 +1,6 @@
 module Cartas where
-
 data Carta = Carta {
-    iD :: Int,
-    nomeCarta :: String,
+    nome :: String,
     ataque :: Int,
     defesa :: Int,
     modoAtaque :: Bool
@@ -92,19 +90,5 @@ colacao = Carta 60 "colação de grau " 2700 2450 True
 
 formaturaCara :: Carta
 formaturaCara = Carta 61 "formatura o zoi da Cara" 2800 2600 True
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
