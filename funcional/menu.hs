@@ -1,3 +1,4 @@
+module Menu where
 
 printLogo :: IO()
 printLogo = do
@@ -34,15 +35,22 @@ menu = do
     putStrLn "\n\n "
     putStrLn "\n\nDigite sua escolha: "
 
-menuDeck :: IO()
-menuDeck  p =  do
-                putStrLn "\n          #   Deck   #\n\n\n"
+menuColecao :: IO()
+menuColecao  =  do
+                putStrLn "\n          #   coleção  #\n\n\n"
                 putStrLn "[1] -> Adicionar cartas ao deck"
                 putStrLn "[2] -> Sair"
 
+menuDeck :: IO()
+menuDeck  =  do
+                putStrLn "\n          #   Deck   #\n\n\n"
+                putStrLn "[1] -> Coleção"
+                putStrLn "[2] -> Remover cartas do deck"
+                putStrLn "[3] -> Sair"
+
 
 menuIniciar :: IO()
-menuIniciar p =  do
+menuIniciar =  do
                 putStrLn "\n              #   Modo de jogo   #\n\n\n"
                 putStrLn "[1] -> Campanha"
                 putStrLn "[2] -> Duelo livre"
@@ -51,11 +59,11 @@ menuIniciar p =  do
 
 
 menuCampanha:: IO()
-menuCampanha p = do
+menuCampanha = do
 
 
 menuDuelo:: IO()
-menuDuelo p = do
+menuDuelo = do
 
 
 
