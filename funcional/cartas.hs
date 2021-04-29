@@ -1,8 +1,6 @@
 module Cartas where
-
 data Carta = Carta {
-    iD :: Int,
-    nomeCarta :: String,
+    nome :: String,
     ataque :: Int,
     defesa :: Int,
     modoAtaque :: Bool
@@ -154,19 +152,5 @@ projetoEmComputacao2 = Carta 32 "Projeto em computação 2" 2700 2000 True
 
 emprego :: Carta
 emprego = Carta 33 "Emprego" 2900 2500 True
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
