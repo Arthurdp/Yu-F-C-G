@@ -1,5 +1,6 @@
 module Cartas where
 data Carta = Carta {
+    iD :: Int,
     nome :: String,
     ataque :: Int,
     defesa :: Int,
