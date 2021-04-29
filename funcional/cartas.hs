@@ -8,6 +8,12 @@ data Carta = Carta {
     modoAtaque :: Bool
 } deriving (Show)
 
+
+--Carta vazia
+
+cartaVazia :: Carta
+cartaVazia = Carta 00 "carta vazia" 00 00 True
+
 --Cartas 1 2 periodo
 
 matematicaBasica :: Carta
@@ -23,82 +29,7 @@ perdeuOnibus :: Carta
 perdeuOnibus = Carta 5  "Perdeu ônibus" 600 750 True 
 
 esquecimento :: Carta
-esquecimento = Carta 6 "Esquecimento" 800 700 True 
-
---Cartas 3 4 periodo
-
-bd1 :: Carta
-bd1 = Carta 7 "Banco de dados 1" 1100 1300 True 
-
-preguica :: Carta
-preguica = Carta 8 "Preguiça" 1500 1200 True 
-
-roubo :: Carta
-roubo = Carta 9 "Roubo"  1250 1400 True 
-
-namoro :: Carta
-namoro = Carta 10 "Namoro" 1400 1100 True 
-
-sagui :: Carta
-sagui = Carta 11 "Sagui" 1100 1500 True 
-
---Cartas 5 6 periodo
-
-pato :: Carta
-pato = Carta 37 "Pato" 1700 1600 True
-
-gato :: Carta
-gato = Carta 38 "Gato" 2000 1600 True 
-
-cachorro :: Carta
-cachorro =Carta  39 "Cachorro" 1700 2000 True 
-
-metodologiaCientifica :: Carta
-metodologiaCientifica = Carta 100 "Metodologia cientifica" 1800 1700 True 
-
-wifi :: Carta
-wifi = Carta 101 "Wi-fi" 1600 1900 True 
-
---Cartas 7 8 periodo
-
-sorte :: Carta
-sorte = Carta 102 "Sorte" 2100 2200 True 
-
-amizade :: Carta
-amizade = Carta 103 "Amizade" 2400 2200 True 
-
-vicio :: Carta
-vicio = Carta 104 "Vício" 2500 2100 True 
-
-iguana :: Carta
-iguana = Carta 105 "Iguana" 2200 2500 True 
-
-dorDeCabeca :: Carta
-dorDeCabeca = Carta 106 "Dor de cabeça" 2300 2000 True 
-
---Cartas 9 periodo
-
-laguinho :: Carta
-laguinho = Carta 107 "Laguinho" 2500 2700 True
-
-greve :: Carta
-greve = Carta 108 "Greve" 2700 2600 True
-
-fimDoMundo :: Carta
-fimDoMundo = Carta 109 "Fim do Mundo" 2900 2600 True
-
-insonia :: Carta
-insonia = Carta 110 "Insônia" 2700 2500 True 
-
-jacare :: Carta
-jacare = Carta 110 "Jacaré" 2800 2700 True 
-
---Carta vazia
-
-cartaVazia :: Carta
-cartaVazia = Carta 00 "carta vazia" 00 00 True
-
---Cartas 1 2 periodo
+esquecimento = Carta 6 "Esquecimento" 800 700 True
 
 sePerdeu :: Carta
 sePerdeu = Carta 40 "Se perdeu no Campus" 900 700 True
@@ -162,6 +93,21 @@ leda = Carta 20 "LEDA" 1200 1000 True
 repLEDA :: Carta
 repLEDA = Carta 21 "Reposição de LEDA (Tá ferrado)" 1200 1500 True
 
+bd1 :: Carta
+bd1 = Carta 7 "Banco de dados 1" 1100 1300 True 
+
+preguica :: Carta
+preguica = Carta 8 "Preguiça" 1500 1200 True 
+
+roubo :: Carta
+roubo = Carta 9 "Roubo"  1250 1400 True 
+
+namoro :: Carta
+namoro = Carta 10 "Namoro" 1400 1100 True 
+
+sagui :: Carta
+sagui = Carta 11 "Sagui" 1100 1500 True
+
 --Cartas 5 6 periodo
 
 crise :: Carta
@@ -194,6 +140,21 @@ repEngenhariaSoft = Carta 25 "Reposição de Engenharia de Software" 1800 1300 T
 iA :: Carta
 iA = Carta 26 "Inteligência Artificial" 1800 1700 True
 
+pato :: Carta
+pato = Carta 37 "Pato" 1700 1600 True
+
+gato :: Carta
+gato = Carta 38 "Gato" 2000 1600 True 
+
+cachorro :: Carta
+cachorro =Carta  39 "Cachorro" 1700 2000 True 
+
+metodologiaCientifica :: Carta
+metodologiaCientifica = Carta 100 "Metodologia cientifica" 1800 1700 True 
+
+wifi :: Carta
+wifi = Carta 101 "Wi-fi" 1600 1900 True
+
 --Cartas 7 8 periodo
 
 ressaca :: Carta
@@ -223,6 +184,21 @@ estagio = Carta 29 "Estágio" 2400 1500 True
 repCompiladores :: Carta
 repCompiladores = Carta 30 "Reposição de Compiladores" 2200 1500 True
 
+sorte :: Carta
+sorte = Carta 102 "Sorte" 2100 2200 True 
+
+amizade :: Carta
+amizade = Carta 103 "Amizade" 2400 2200 True 
+
+vicio :: Carta
+vicio = Carta 104 "Vício" 2500 2100 True 
+
+iguana :: Carta
+iguana = Carta 105 "Iguana" 2200 2500 True 
+
+dorDeCabeca :: Carta
+dorDeCabeca = Carta 106 "Dor de cabeça" 2300 2000 True
+
 --Cartas 9 periodo
 
 colacao :: Carta
@@ -239,4 +215,20 @@ projetoEmComputacao2 = Carta 32 "Projeto em computação 2" 2700 2000 True
 
 emprego :: Carta
 emprego = Carta 33 "Emprego" 2900 2500 True
+
+laguinho :: Carta
+laguinho = Carta 107 "Laguinho" 2500 2700 True
+
+greve :: Carta
+greve = Carta 108 "Greve" 2700 2600 True
+
+fimDoMundo :: Carta
+fimDoMundo = Carta 109 "Fim do Mundo" 2900 2600 True
+
+insonia :: Carta
+insonia = Carta 110 "Insônia" 2700 2500 True 
+
+jacare :: Carta
+jacare = Carta 110 "Jacaré" 2800 2700 True 
+
 
