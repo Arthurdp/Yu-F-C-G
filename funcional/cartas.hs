@@ -1,3 +1,14 @@
+data Carta = Carta {
+    iD :: Int,
+    nome :: String,
+    ataque :: Int,
+    defesa :: Int,
+    modoAtaque :: Bool
+} deriving (Show)
+
+programacao1 :: Carta
+programacao1 = Carta "Programação 1" 600 400 True
+
 --Cartas 1 2 periodo
 
 matematicaBasica :: Carta
