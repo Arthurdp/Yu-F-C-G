@@ -98,3 +98,7 @@ gerenciaDeck jog = do
  vizualizaDeck jog
  opcao <- getLine 
  gerenciaDeckOp opcao jog
+
+
+
+ 
