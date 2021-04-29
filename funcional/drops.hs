@@ -1,5 +1,6 @@
-
+module Drops where
 import Cartas
+
 
 drops1 :: [Carta]
 drops1 = [sePerdeu, python, fmcc1, fmcc2,calculo1]
