@@ -88,3 +88,11 @@ pegaMenorA :: Carta -> [Carta] -> Carta
 pegaMenorA carta (x:xs)
  |(ataque carta) > ataque x = x
  |otherwise = pegaMenorA carta xs
+
+geraDeckEmbaralhado :: [Carta] -> [Carta]
+geraDeckEmbaralhado [] = []
+geraDeckEmbaralhado cartas = carta:geraDeckEmbaralhado (removeCarta (iD carta) cartas)  
+    where carta = (cartaAleatoria cartas)
+
+cartaAleatoria :: [Carta] -> Carta
+cartaAleatoria lista = (lista !! unsafePerformIO(randomRIO (0, (length lista) - 1)))
