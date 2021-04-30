@@ -1,5 +1,4 @@
 module Menu where
-import Deck
 
 printLogo :: IO String
 printLogo = do
@@ -24,7 +23,7 @@ menuNome = do
     return a
 
 
-menu ::Jogador -> IO()
+menu :: IO()
 menu = do
     putStrLn "\n\n "
     putStrLn "\n #   Menu   #\n"
@@ -56,6 +55,7 @@ menuIniciar =  do
                 putStrLn "[2] -> Duelo livre"
                 putStrLn "[3] -> Sair"
                 putStr "\n\nDigite sua opção: "
+
 
 
 

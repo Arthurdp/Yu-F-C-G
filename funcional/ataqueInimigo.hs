@@ -1,6 +1,7 @@
 module AtaqueInimigo where
+import System.IO.Unsafe
+import System.Random (randomRIO)
 
-import Cartas
 
 ataqueMaisForte1 :: [Carta] -> Int
 ataqueMaisForte1 [] = 0

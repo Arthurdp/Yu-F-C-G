@@ -2,10 +2,11 @@ module Batalha where
 
 import GHC.IO.Encoding
 import System.IO.Unsafe
+import System.Random (randomRIO)
 import Cartas
-import Deck
-import AtaqueInimigo
-import Menu
+import Jogador
+
+
 
 main :: IO()
 main = do
@@ -27,7 +28,7 @@ geraMao :: [Carta] -> [Carta]
 geraMao deck = take 5 (reverse deck)
 
 geraMao4 :: [Carta] -> [Carta]
-geraMao deck = take 4 (reverse deck)
+geraMao4 deck = take 4 (reverse deck)
 
 batalha :: Jogador -> Jogador -> IO Jogador
 batalha jogador oponente = do
@@ -113,7 +114,7 @@ erroCartaEmDefesa jogador oponente = do
     menuAtaque jogador oponente
 
 erroCartaAtacou :: Jogador -> Jogador -> IO Jogador
-erroCartaEmDefesa jogador oponente = do
+erroCartaAtacou jogador oponente = do
     putStrLn  "A carta que você escolheu já atacou... escolha novamente"
     printCampo (vida jogador) (vida oponente) (cartasCampo oponente) (cartasCampo jogador) (mao jogador)
     menuAtaque jogador oponente
@@ -183,7 +184,7 @@ calculaDiferenca :: Int -> Int -> Int
 calculaDiferenca cartaAtacante cartaAtacada = cartaAtacante - cartaAtacada
 
 testaVitoria :: Jogador -> Jogador -> IO Jogador
-testeViroria jogador oponente= do
+testaVitoria jogador oponente = do
     if (vida jogador) == 0 then printLoose 
     else if (vida oponente) == 0 then printWin
     else 
@@ -194,7 +195,7 @@ ataqueMaisForte [] = 0
 ataqueMaisForte (x:xs) = max (ataque x) (ataqueMaisForte xs)
 
 achaAtaqueMaisForte :: [Carta] -> Int -> Carta
-ataqueMaisForte (x:xs) n
+achaAtaqueMaisForte (x:xs) n
  |ataque x == n = x
  |otherwise = ataqueMaisForte xs n
 
@@ -268,8 +269,8 @@ printLoose jogador = do
 printWin :: Jogador -> IO Jogador
 printWin jogador = do
     putStrLn "\n------------You Win-------------\n"
-    let jogadorWin = -- add drops Will
-    menu jogador
+   -- let jogadorWin = -- add drops Will
+    mainMenu jogador
 
 printLinhaCartas :: [Carta] -> String
 printLinhaCartas [] = ""

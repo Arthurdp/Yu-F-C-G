@@ -1,16 +1,8 @@
 module Deck where
+import Jogador
 import Cartas
 import Menu
-
-data Jogador = Jogador{
-    nomeJogador :: String,
-    colecao :: [Carta],
-    deck :: [Carta],
-    vida :: Int,
-    mao :: [Carta],
-    cartasCampo :: [Carta],
-    derrotados :: [Jogador]
-} deriving (Show)
+import Inimigos
 
 contem :: Int -> [Carta] -> Bool
 contem i [] = False

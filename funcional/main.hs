@@ -1,8 +1,15 @@
 module Main where
-import Batalha
-import Deck
 import Menu
+import Deck
+import Jogador
 import Inimigos
+import Batalha
+
+main :: IO()
+main = do
+ let nome = printLogo
+ let jog = Jogador nome [] [] 8000 [] [] []
+ mainMenu jog
 
 escolher :: Int -> Jogador -> IO Jogador
 escolher n jog
@@ -16,11 +23,5 @@ mainMenu jog = do
  menu
  opcao <- getLine
  escolher (read opcao) jog
-
-
-main :: IO()
-main = do
- let nome = printLogo
- let jog = Jogador nome [] [] 8000 [] [] []
  
 
