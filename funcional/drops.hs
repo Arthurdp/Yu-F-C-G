@@ -67,11 +67,12 @@ drops8 = dropar[ressaca, trabalhoGrupo, treta, pcQuebrado, provas3, compiladores
  louco, brasileiro, resistente, mutante, gaudencioPossesso, colacao, tcc,
   colacao, tcc, formaturaCara, projetoEmComputacao2, emprego, laguinho, greve]
 
--- 100%
+-- 60% 40%
 -- 9
 drops9 :: Carta
 drops9 = dropar [colacao, formaturaCara, tcc, projetoEmComputacao2, emprego, laguinho, greve,
- fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster, falheiEmTudo]
+ fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster, falheiEmTudo, ressaca,
+  trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1]
 
 
 dropar :: [Carta] -> Carta
