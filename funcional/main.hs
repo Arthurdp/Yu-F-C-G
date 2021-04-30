@@ -6,6 +6,7 @@ import System.Random (randomRIO)
 import Menu
 import Jogador
 import Inimigos
+import Cartas
 
 
 main :: IO()
@@ -220,7 +221,7 @@ addCartaVazia lista = cartaVazia ++ lista
 
 menuInvocaCartas :: Jogador -> Jogador -> IO()
 menuInvocaCartas jogador oponente = do
-    printMenuInvocaCartas
+    --printMenuInvocaCartas
     putStrLn "\n\n \
     \\n #-----------Menu de Invocação-----------#\n\
     \\n\n\
@@ -235,45 +236,45 @@ menuInvocaCartas jogador oponente = do
     \\n\nDigite sua escolha: "
 
 
-printMenuAtaque :: Jogador -> IO()
-printMenuAtaque jogador = do
+printMenuAtaque :: Jogador -> IO() 
+printMenuAtaque jogador = 
     putStrLn "\n\n \
     \\n #-----------Menu de Ataque-----------#\n\
     \\n\n\
     \\n #-----------Estas são as cartas do seu campo-----------#\n\
     \\n"
-    "\n[1] -> " ++ repCarta (!! 0 (cartasCampo jogador))
-    "\n[2] -> " ++ repCarta (!! 1 (cartasCampo jogador))
-    "\n[3] -> " ++ repCarta (!! 2 (cartasCampo jogador))
-    "\n[4] -> " ++ repCarta (!! 3 (cartasCampo jogador))
-    "\n[5] -> " ++ repCarta (!! 4 (cartasCampo jogador))
-    ++ "\n\
+    "\n[1] -> " ++ repCarta ((cartasCampo jogador)!! 0 )
+    "\n[2] -> " ++ repCarta ((cartasCampo jogador)!! 1 )
+    "\n[3] -> " ++ repCarta ((cartasCampo jogador)!! 2 )
+    "\n[4] -> " ++ repCarta ((cartasCampo jogador)!! 3 )
+    "\n[5] -> " ++ repCarta ((cartasCampo jogador)!! 4 )
+    ++ "\n\n \
     \\n [6] -> Terminar turno\
     \\n\nEscolha uma carta: "
 
 printMenuAtaqueOponente :: Jogador -> IO()
-printMenuAtaqueOponente oponente = do
+printMenuAtaqueOponente oponente =
     putStrLn "\n\n \
     \\n #-----------Menu de Ataque-----------#\n\
     \\n\n\
     \\n #-----------Estas são as cartas do campo do oponente-----------#\n\
     \\n"
-    "\n[1] -> " ++ repCarta (!! 0 (cartasCampo oponente))
-    "\n[2] -> " ++ repCarta (!! 1 (cartasCampo oponente))
-    "\n[3] -> " ++ repCarta (!! 2 (cartasCampo oponente))
-    "\n[4] -> " ++ repCarta (!! 3 (cartasCampo oponente))
-    "\n[5] -> " ++ repCarta (!! 4 (cartasCampo oponente))
+    "\n[1] -> " ++ repCarta ((cartasCampo oponente) !! 0 )
+    "\n[2] -> " ++ repCarta ((cartasCampo oponente) !! 1 )
+    "\n[3] -> " ++ repCarta ((cartasCampo oponente) !! 2 )
+    "\n[4] -> " ++ repCarta ((cartasCampo oponente) !! 3 )
+    "\n[5] -> " ++ repCarta ((cartasCampo oponente) !! 4 )
     ++ "\n\n \
     \\n\nEscolha uma carta para atacar, se não houver cartas ataque diretamente: "
 
 
 
-printLoose :: Jogador -> IO Jogador
+printLoose :: Jogador -> IO()
 printLoose jogador = do
     putStrLn "\n-----------You Loose------------\n"
-    menu jogador
+    mainMenu jogador
 
-printWin :: Jogador -> IO Jogador
+printWin :: Jogador -> IO()
 printWin jogador = do
     putStrLn "\n------------You Win-------------\n"
    -- let jogadorWin = -- add drops Will
@@ -287,12 +288,12 @@ printLinhaCartas (x:xs)
     | iD x < 100 = "|  "++ show(iD x) ++ "    |" ++ printLinhaCartas xs
     | otherwise = "|  "++ show(iD x) ++ "  |" ++ printLinhaCartas xs
 
-printCampo :: Int -> Int -> [Carta] -> [Carta] -> [Carta] ->  String
+printCampo :: Int -> Int -> [Carta] -> [Carta] -> [Carta] -> IO()
 printCampo vidaJogador vidaOponente cartasOponente cartasJogador mao = do
     putStrLn ("\n\nVida Jogador = " ++ show vidaJogador ++ "\nVida Oponente = " ++ show vidaOponente ++ "\n\n")
-    putStrLn printCampoOponente cartasOponente
-    putStrLn printCampoJogador cartasJogador
-    putStrLn printMao mao
+    putStrLn (printCampoOponente cartasOponente)
+    putStrLn (printCampoJogador cartasJogador)
+    putStrLn (printMao mao)
 
 printCampoOponente :: [Carta] -> String
 printCampoOponente cartas = "\
@@ -425,25 +426,25 @@ gerenciaDeck jog = do
 
  -- ataque inimigo 
 
- ataqueMaisForte1 :: [Carta] -> Int
+ataqueMaisForte1 :: [Carta] -> Int
 ataqueMaisForte1 [] = 0
 ataqueMaisForte1 (x:xs) = max (ataque x) (ataqueMaisForte1 (xs))
 
-ataqueMaisForte :: [Carta] -> Carta
-ataqueMaisForte [] = cartaVazia
-ataqueMaisForte (x:xs)                 
+ataqueMaisFortee :: [Carta] -> Carta
+ataqueMaisFortee [] = cartaVazia
+ataqueMaisFortee (x:xs)                 
  |ataque x == n = x 
- |otherwise = ataqueMaisForte xs 
+ |otherwise = ataqueMaisFortee xs 
   where n = ataqueMaisForte1 (x:xs)
 
 defesaMaisForte1 :: [Carta] -> Int
 defesaMaisForte1 [] = 0
 defesaMaisForte1 (x:xs) = max (defesa x) (defesaMaisForte1 (xs))
 
-defesaMaisForte :: [Carta] -> Carta
-defesaMaisForte (x:xs)                 
+defesaMaisFortee :: [Carta] -> Carta
+defesaMaisFortee (x:xs)                 
  |defesa x == n = x
- |otherwise = defesaMaisForte xs 
+ |otherwise = defesaMaisFortee xs 
  where n = defesaMaisForte1 (x:xs)
 
 ataqueMaisFraco1 :: [Carta] -> Int
@@ -485,10 +486,10 @@ logicaAtaque x y
  |verificaMenorD cartaAtaque (pegaModoDefesa x) = pegaMenorD cartaAtaque (pegaModoDefesa x)
  |verificaMenorA cartaAtaque (pegaModoAtaque x) = pegaMenorA cartaAtaque (pegaModoAtaque x)
  |otherwise = menorDefesaDef
- where cartaAtaque = (ataqueMaisForte (pegaModoAtaque y))
-       maiorDefesaDef = (defesaMaisForte (pegaModoDefesa x))
+ where cartaAtaque = (ataqueMaisFortee (pegaModoAtaque y))
+       maiorDefesaDef = (defesaMaisFortee (pegaModoDefesa x))
        menorDefesaDef = (defesaMaisFraca (pegaModoDefesa x)) 
-       maiorAtaqueAta = (ataqueMaisForte (pegaModoAtaque x))
+       maiorAtaqueAta = (ataqueMaisFortee (pegaModoAtaque x))
 
 verificaMenorD :: Carta -> [Carta]-> Bool
 verificaMenorD carta [] = False
