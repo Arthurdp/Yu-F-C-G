@@ -92,7 +92,7 @@ zeFuinha = Carta 24 "aluno ze fuinha" 1050 800 True
 --Cartas 3 4 periodo
 
 calculo2 :: Carta
-calculo2 = Carta 25 "calculo II" 1300 1000 True
+calculo2 = Carta 25 "calculo II" 1400 1000 True
 
 haskell :: Carta
 haskell  = Carta 26 "Aprender Haskell" 1500 1200 True
@@ -107,7 +107,7 @@ grafos :: Carta
 grafos = Carta 29 "Video aula de Grafos" 1250 1100 True
 
 linear :: Carta
-linear = Carta 30 "Algebra Linear" 1300 800 True
+linear = Carta 30 "Algebra Linear" 1450 800 True
 
 eda :: Carta
 eda = Carta 31 "EDA" 1200 1000 True
@@ -134,13 +134,13 @@ namoro :: Carta
 namoro = Carta 38 "Namoro" 1400 1100 True 
 
 sagui :: Carta
-sagui = Carta 39 "Sagui" 1100 1500 True
+sagui = Carta 39 "Sagui" 1400 1500 True
 
 luizAntonio :: Carta
 luizAntonio = Carta 40 "Professor Luiz Antonio" 1200 1400 True
 
 adalberto :: Carta
-adalberto = Carta 41 "Tio adalberto" 1300 1100 True
+adalberto = Carta 41 "Tio adalberto" 1450 1100 True
 
 killer :: Carta
 killer = Carta 42 "Professor killer" 1500 1000 True
@@ -149,10 +149,10 @@ patriciaDuarte :: Carta
 patriciaDuarte = Carta 43 "Professora Patricia Duarte" 1000 1500 True
 
 nervosismo :: Carta
-nervosismo = Carta 44 "nervosismo" 1550 1300 True
+nervosismo = Carta 44 "nervosismo" 1500 1300 True
 
 campelo :: Carta
-campelo = Carta 45 "Professor Claudio Campelo" 1100 1400 True
+campelo = Carta 45 "Professor Claudio Campelo" 1400 1400 True
 
 areli :: Carta
 areli = Carta 46 "professora Areli" 1100 1200 True
@@ -177,7 +177,6 @@ fabioJorge = Carta 52 "professor Fabio Jorge" 1350 1100 True
 
 substituto :: Carta
 substituto = Carta 53 "Professor substituto" 1500 1200 True
-
 
 --Cartas 5 6 periodo
 
@@ -230,7 +229,7 @@ desmotivacao :: Carta
 desmotivacao = Carta 69 "Desmotivacao" 1600 1600 True
 
 depressao :: Carta
-depressao = Carta 70 "Deprecao" 1650 1875 True
+depressao = Carta 70 "Depressao" 1950 1875 True
 
 cachaca :: Carta
 cachaca = Carta 71 "cachaca de oro" 1600 2000 True
@@ -245,7 +244,7 @@ resiliente :: Carta
 resiliente = Carta 74 "aluno resiliente" 2000 2000 True
 
 odio :: Carta
-odio = Carta 75 "aluno motivado pelo odio" 2100 1600 True
+odio = Carta 75 "aluno motivado pelo odio" 2020 1600 True
 
 --Cartas 7 8 periodo
 
@@ -265,7 +264,7 @@ provas3 :: Carta
 provas3  = Carta 80 "3 provas no mesmo dia" 2500 2450 True
 
 compiladores :: Carta
-compiladores = Carta 81 "Compiladores" 2000 1500 True
+compiladores = Carta 81 "Compiladores" 2100 1500 True
 
 projetoEmComputacao1 :: Carta
 projetoEmComputacao1 = Carta 82 "Projeto em computação 1" 2500 2000 True
@@ -295,7 +294,7 @@ cheirado :: Carta
 cheirado = Carta 90 "aluno cheirador (aspirador fica pra traz)" 2400 2250 True
 
 louco :: Carta
-louco = Carta 91 "aluno que adquiriu loucura ao longo do tempo, mas uma genialidade incrivel" 2650 2100 True
+louco = Carta 91 "aluno que adquiriu loucura ao longo do tempo, mas uma genialidade incrivel" 2501 2100 True
 
 brasileiro :: Carta
 brasileiro = Carta 92 "professor Francisco Brasileiro" 2500 2200 True
@@ -307,7 +306,7 @@ mutante :: Carta
 mutante = Carta 94 "aluno que sofreu mutacoes devido a exposicao demasiada a radiacao no lcc2" 2100 2100 True
 
 gaudencioPossesso :: Carta
-gaudencioPossesso = Carta 95 "professor gaudencio possuido por espirito de ira" 2650 2500 True
+gaudencioPossesso = Carta 95 "professor gaudencio possuido por espirito de ira" 2505 2500 True
 
 --Cartas 9 periodo
 
@@ -352,6 +351,4 @@ genioMaster = Carta 108 "aluno contratado como dev pleno sem nunca ter trabalhad
 
 falheiEmTudo :: Carta
 falheiEmTudo = Carta 109 "aluno que fracassou em tudo e adiquiriu resistencias incriveis" 2600 3000 True
-
-
 
