@@ -1,4 +1,16 @@
 module Deck where
+import Cartas
+import Menu
+
+data Jogador = Jogador{
+    nomeJogador :: String,
+    colecao :: [Carta],
+    deck :: [Carta],
+    vida :: Int,
+    mao :: [Carta],
+    cartasCampo :: [Carta],
+    derrotados :: [Jogador]
+} deriving (Show)
 
 contem :: Int -> [Carta] -> Bool
 contem i [] = False
@@ -20,7 +32,7 @@ addCarta idCarta (x:xs) d
  |otherwise = addCarta idCarta xs d
 
 addCartaDeck :: Int -> Jogador -> Jogador
-addCartaDeck idCarta jog = Jogador (nomeJogador jog) (colecao jog) (addCarta idCarta (colecao jog) (deck jog))
+addCartaDeck idCarta jog = Jogador (nomeJogador jog) (colecao jog) (addCarta idCarta (colecao jog) (deck jog)) 8000 [] [] []
 
 removeCarta :: Int -> [Carta] -> [Carta]
 removeCarta idCarta [] = []
@@ -32,7 +44,7 @@ removeCartaDeck :: Jogador -> IO Jogador
 removeCartaDeck jog = do
  putStrLn "Id da carta: "
  idCarta <- getLine
- let j = Jogador (nomeJogador jog) (colecao jog) (removeCarta (read idCarta) (deck jog))
+ let j = Jogador (nomeJogador jog) (colecao jog) (removeCarta (read idCarta) (deck jog)) 8000 [] [] []
  putStrLn "Carta removida do deck!"
  gerenciaDeck j
 

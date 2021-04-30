@@ -30,8 +30,7 @@ menu = do
     putStrLn "\n\n "
     putStrLn "[1] -> Iniciar jogo"
     putStrLn "[2] -> Deck"
-    putStrLn "[3] -> Status do jogador"
-    putStrLn "[4] -> Sair"
+    putStrLn "[3] -> Sair"
     putStrLn "\n\n "
     putStrLn "\n\nDigite sua escolha: "
 
@@ -56,14 +55,6 @@ menuIniciar =  do
                 putStrLn "[2] -> Duelo livre"
                 putStrLn "[3] -> Sair"
                 putStr "\n\nDigite sua opção: "
-
-
-menuCampanha:: IO()
-menuCampanha = do
-
-
-menuDuelo:: IO()
-menuDuelo = do
 
 
 

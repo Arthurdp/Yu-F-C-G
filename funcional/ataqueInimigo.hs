@@ -1,3 +1,7 @@
+module AtaqueInimigo where
+
+import Cartas
+
 ataqueMaisForte1 :: [Carta] -> Int
 ataqueMaisForte1 [] = 0
 ataqueMaisForte1 (x:xs) = max (ataque x) (ataqueMaisForte1 (xs))

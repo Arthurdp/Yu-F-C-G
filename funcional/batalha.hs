@@ -4,6 +4,8 @@ import GHC.IO.Encoding
 import System.IO.Unsafe
 import Cartas
 import Deck
+import AtaqueInimigo
+import Menu
 
 main :: IO()
 main = do
@@ -13,15 +15,6 @@ main = do
     let mao = [pato, iA, pato, iA, pato]
     printcampo mao mao mao
 
-data Jogador = Jogador{
-    nomeJogador :: String,
-    colecao :: [Carta],
-    deck :: [Carta],
-    vida :: Int,
-    mao :: [Carta],
-    cartasCampo :: [Carta],
-    derrotados :: [Jogador]
-} deriving (show)
 
 periodo1 :: Jogador
 periodo1 = "Primeiro Período" [] [pato, iA, pato, iA, pato, iA, pato, iA, pato, iA, pato, iA, pato, iA, pato, iA, pato, iA, pato, iA] 8000 [] [] []
