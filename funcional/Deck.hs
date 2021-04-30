@@ -25,7 +25,7 @@ addCartaDeck idCarta jog = Jogador (nomeJogador jog) (colecao jog) (addCarta idC
 removeCarta :: Int -> [Carta] -> [Carta]
 removeCarta idCarta [] = []
 removeCarta idCarta (x:xs)
- |idCarta == iD x = removeCarta idCarta xs 
+ |idCarta == iD x = xs 
  |otherwise = x:removeCarta idCarta xs
 
 removeCartaDeck :: Jogador -> IO Jogador
