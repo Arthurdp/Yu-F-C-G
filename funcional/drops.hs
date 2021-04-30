@@ -1,5 +1,6 @@
 module Drops where
 import Cartas
+import AtaqueInimigo
 
 -- 90% 10%
 -- 1,2 e 3,4
