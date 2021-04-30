@@ -89,8 +89,6 @@ ataqueOponente jogador oponente = do
 
 -- Coloca a lógica de ataque aqui
 
-
-
 logicaInvoc :: Jogador -> Carta
 logicaInvoc oponente = do
     let ataqueForte = ataqueMaisForte (mao oponente)

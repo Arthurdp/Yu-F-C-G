@@ -1,6 +1,7 @@
 module Menu where
+import Deck
 
-printLogo :: IO()
+printLogo :: IO String
 printLogo = do
     putStrLn "  Y88b   d88P                   8888888888         d8888b              d8888b"
     putStrLn "   Y88b d88P                    888               d88P  Y88b         d88P  Y88b"
@@ -13,17 +14,17 @@ printLogo = do
     menuNome
 
 
-menuNome :: IO()
+menuNome :: IO String
 menuNome = do
     putStrLn "\n\n "
     putStrLn "\n\nNome do jogador: "
     a <- getLine
     putStrLn "\n\n "
     print( "Bem vindo " ++ a)
-    menu
+    return a
 
 
-menu :: IO()
+menu ::Jogador -> IO()
 menu = do
     putStrLn "\n\n "
     putStrLn "\n #   Menu   #\n"
