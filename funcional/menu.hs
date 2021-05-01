@@ -1,6 +1,6 @@
 module Menu where
 
-printLogo :: IO String
+printLogo :: IO ()
 printLogo = do
     putStrLn "  Y88b   d88P                   8888888888         d8888b              d8888b"
     putStrLn "   Y88b d88P                    888               d88P  Y88b         d88P  Y88b"
@@ -13,15 +13,10 @@ printLogo = do
     menuNome
 
 
-menuNome :: IO String
+menuNome :: IO()
 menuNome = do
-    putStrLn "\n\n "
-    putStrLn "\n\nNome do jogador: "
-    a <- getLine
-    putStrLn "\n\n "
-    print( "Bem vindo " ++ a)
-    return a
-
+    putStrLn "\n "
+    putStrLn "\nDigite seu nome: "
 
 menu :: IO()
 menu = do
