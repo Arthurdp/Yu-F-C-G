@@ -8,28 +8,73 @@ import Jogador
 import Inimigos
 import Cartas
 
-
+  
 main :: IO Jogador
 main = do
+ setLocaleEncoding utf8
  printLogo
  nome <- getLine
- print( "Bem vindo " ++ nome)
+ putStrLn( "\nBem vindo " ++ nome)
  let jog = Jogador nome [] [matematicaBasica, perdeuOnibus, python, fe, repProgramacao1, livia, eanesBenevolente, robertKalley, matematicaBasica, perdeuOnibus, python, fe, repProgramacao1, livia, eanesBenevolente, robertKalley, perdeuOnibus, python, perdeuOnibus,fe] 8000 [] [] []
  mainMenu jog
 
 escolher :: Int -> Jogador -> IO Jogador
 escolher n jog
- |n == 1 = batalha jog periodo1
- |n == 2 = gerenciaDeck jog
- |n == 3 = do 
+ |n == 1 = do
+    let listaPeriodos = [periodo1, periodo2, periodo3, periodo4, periodo5, periodo6, periodo7, periodo8, periodo9]
+    batalha jog (unsafePerformIO (analisaFase jog (derrotados jog) listaPeriodos))
+ |n == 2 = menuDuelo jog
+ |n == 3 = gerenciaDeck jog
+ |n == 4 = do 
     putStrLn "ok né... xau"
     return jog
 
+analisaFase :: Jogador -> [Jogador] -> [Jogador] -> IO Jogador
+analisaFase jog derrotados [] = do
+       mainMenu jog
+analisaFase jog derrotados (x:xs) 
+    | meuElem x derrotados = analisaFase jog derrotados xs
+    | otherwise = return x
+
+printZerou :: IO()
+printZerou = do
+    putStrLn "\nParabéns!! Você derrotou todos os períodos e se formou. Continue jogando no Free Duel para conseguir todas as cartas, ou selecione 'sair' para sair do jogo\n"
+ 
 mainMenu :: Jogador -> IO Jogador
 mainMenu jog = do
  menu
  opcao <- getLine
  escolher (read opcao) jog
+
+menuDuelo :: Jogador -> IO Jogador
+menuDuelo jog  = do
+    printMenuDuelo
+    opcao <- getLine
+    let x = read opcao
+    escolheOp x jog
+      
+
+escolheOp:: Int -> Jogador -> IO Jogador
+escolheOp x jog
+    |x == 1 && (meuElem periodo1 (derrotados jog)) = batalha jog periodo1
+    |x == 2 && (meuElem periodo2 (derrotados jog)) = batalha jog periodo2
+    |x == 3 && (meuElem periodo3 (derrotados jog)) = batalha jog periodo3
+    |x == 4 && (meuElem periodo4 (derrotados jog)) = batalha jog periodo4
+    |x == 5 && (meuElem periodo5 (derrotados jog)) = batalha jog periodo5
+    |x == 6 && (meuElem periodo6 (derrotados jog)) = batalha jog periodo6
+    |x == 7 && (meuElem periodo7 (derrotados jog)) = batalha jog periodo7
+    |x == 8 && (meuElem periodo8 (derrotados jog)) = batalha jog periodo8
+    |x == 9 && (meuElem periodo9 (derrotados jog)) = batalha jog periodo9
+    |x == 10 = mainMenu jog
+    |otherwise = do 
+        putStrLn "Opção indisponível, ou jogador bloqueado"
+        menuDuelo jog
+
+meuElem :: Jogador -> [Jogador] -> Bool
+meuElem periodo [] = False
+meuElem periodo (x:xs)
+    | (nomeJogador x) == nomeJogador periodo = True
+    | otherwise = meuElem periodo xs
 
 --- batalha 
 
@@ -276,14 +321,14 @@ calculaDiferenca cartaAtacante cartaAtacada = cartaAtacante - cartaAtacada
 testaVitoria :: Jogador -> Jogador -> IO Jogador
 testaVitoria jogador oponente = do
     if (vida jogador) == 0 then (printLoose jogador)
-    else if (vida oponente) == 0 then (printWin jogador)
+    else if (vida oponente) == 0 then (printWin jogador oponente)
     else
         menuBatalha jogador oponente
 
 testaVitoriaOponente :: Jogador -> Jogador -> IO Jogador
 testaVitoriaOponente jogador oponente = do
     if (vida jogador) == 0 then (printLoose jogador)
-    else if (vida oponente) == 0 then (printWin jogador)
+    else if (vida oponente) == 0 then (printWin jogador oponente)
     else
         ataqueOponente jogador oponente
 
@@ -393,10 +438,12 @@ printLoose jogador = do
     putStrLn "\n-----------You Loose------------\n"
     mainMenu jogador
 
-printWin :: Jogador -> IO Jogador
-printWin jogador = do
-    putStrLn "\n------------You Win-------------\n"
-    mainMenu jogador
+printWin :: Jogador -> Jogador -> IO Jogador
+printWin jogador oponente = do
+    putStrLn "\n------------------You Win-------------\n"
+    putStrLn "\n------------Voce ganhou a carta...-------------\n"
+    let jogadorWin = addDrop jogador oponente
+    mainMenu jogadorWin
 
 printLinhaCartas :: [Carta] -> String
 printLinhaCartas [] = ""
@@ -641,5 +688,100 @@ geraDeckEmbaralhado cartas = carta:geraDeckEmbaralhado (removeCarta (iD carta) c
 cartaAleatoria :: [Carta] -> Carta
 cartaAleatoria lista = (lista !! unsafePerformIO(randomRIO (0, (length lista) - 1)))
 
--- 
+-- drops
 
+dropar :: [Carta] -> Carta
+dropar lista = do 
+  let x = geraDeckEmbaralhado lista
+  dropar1 x
+  
+dropar1 :: [Carta] -> Carta
+dropar1 (x:xs) = x
+  
+verificaOponente :: Jogador -> Carta
+verificaOponente op
+  |nomeJogador op == "Primeiro período" = drops1
+  |nomeJogador op == "Segundo período" = drops2
+  |nomeJogador op == "Terceiro período" = drops3
+  |nomeJogador op == "Quarto período" = drops4
+  |nomeJogador op == "Quinto período" = drops5
+  |nomeJogador op == "Sexto período" = drops6
+  |nomeJogador op == "Sétimo período" = drops7
+  |nomeJogador op == "Oitavo período" = drops8
+  |otherwise = drops9
+
+addDrop::Jogador -> Jogador -> Jogador 
+addDrop jog opon = Jogador (nomeJogador jog) (verificaOponente opon : (colecao jog)) (deck jog) 8000 [] [] (derrotados jog)
+
+-- 90% 10%
+-- 1,2 e 3,4
+
+drops1 :: Carta
+drops1 = dropar [sePerdeu, python, fmcc1,fmcc2,calculo1, matematicaBasica, empolgacao, fome, 
+  perdeuOnibus,esquecimento, repProgramacao1, programacao2, repProgramacao2,
+  monitorProgramacao1, monitorProgramacao2, fe, uniao, conselhoEstudantil, livia,
+  galdencioAmansado, joseFernando, eanesBenevolente, robertKalley, zeFuinha, calculo2, haskell, sono]
+
+-- 70% 30%
+-- 1,2 e 3,4
+drops2 :: Carta
+drops2 = dropar [sePerdeu, python, fmcc1,fmcc2,calculo1, matematicaBasica, empolgacao, fome, 
+  perdeuOnibus,esquecimento, repProgramacao1, programacao2, repProgramacao2,
+  monitorProgramacao1, monitorProgramacao2, fe, uniao, conselhoEstudantil, livia,
+  galdencioAmansado, joseFernando, eanesBenevolente, robertKalley, zeFuinha, 
+  calculo2, haskell, sono, colaErrada, grafos, linear, eda, repEDA, leda, repLEDA, leda]
+
+-- 90% 10%
+-- 3,4 e 5,6
+drops3 :: Carta
+drops3 = dropar [calculo2, haskell, sono, colaErrada, grafos, linear, eda, repEDA, repLEDA, leda,
+ bd1, preguica, roubo, namoro, sagui, luizAntonio, adalberto, killer, 
+ patriciaDuarte, nervosismo, campelo, areli, rohit, joseane, elmar, everton, 
+ melina, fabioJorge, adalberto, crise, ead, prazo]
+
+-- 70% 30%
+-- 3,4 e 5,6
+drops4 :: Carta
+drops4 = dropar [calculo2, haskell, sono, colaErrada, grafos, linear, eda, repEDA, repLEDA, leda,
+ bd1, preguica, roubo, namoro, sagui, luizAntonio, adalberto, killer, 
+ patriciaDuarte, nervosismo, campelo, areli, rohit, joseane, elmar, everton, 
+ melina, fabioJorge, adalberto, crise, ead, prazo, crise, ead, prazo, optativasDo6, perdido, estatistica, engenhariaSoft, repEstatistica, repEngenhariaSoft,
+ iA, pato, gato, cachorro]
+
+
+-- 90% 10%
+-- 5,6 e 7,8
+drops5 :: Carta
+drops5 = dropar [crise, ead, prazo, optativasDo6, perdido, estatistica, engenhariaSoft, repEstatistica, repEngenhariaSoft,
+ iA, pato, gato, cachorro, metodologiaCientifica, wifi, desmotivacao, 
+ depressao, cachaca, ritalina, queridinho, resiliente, odio, ressaca, trabalhoGrupo, treta]
+
+-- 70% 30%
+-- 5,6 e 7,8
+drops6 :: Carta
+drops6 = dropar [crise, ead, prazo, optativasDo6, perdido, estatistica, engenhariaSoft, repEstatistica, repEngenhariaSoft,
+ iA, pato, gato, cachorro, metodologiaCientifica, wifi, desmotivacao, 
+ depressao, cachaca, ritalina, queridinho, resiliente, odio, ressaca, trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1, estagio, 
+ repCompiladores, sorte]
+
+-- 90% 10%
+-- 7,8 e 9
+drops7 :: Carta
+drops7 = dropar [ressaca, trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1, estagio, 
+ repCompiladores, sorte, amizade, vicio, iguana, dorDeCabeca, cheirado, 
+ louco, brasileiro, resistente, mutante, gaudencioPossesso, colacao, tcc] 
+
+-- 70% 30%
+-- 7,8 e 9
+drops8 :: Carta
+drops8 = dropar[ressaca, trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1, estagio, 
+ repCompiladores, sorte, amizade, vicio, iguana, dorDeCabeca, cheirado, 
+ louco, brasileiro, resistente, mutante, gaudencioPossesso, colacao, tcc,
+  colacao, tcc, formaturaCara, projetoEmComputacao2, emprego, laguinho, greve]
+
+-- 60% 40%
+-- 9
+drops9 :: Carta
+drops9 = dropar [colacao, formaturaCara, tcc, projetoEmComputacao2, emprego, laguinho, greve,
+ fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster, falheiEmTudo, ressaca,
+  trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1]
