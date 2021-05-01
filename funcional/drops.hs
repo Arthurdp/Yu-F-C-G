@@ -1,5 +1,6 @@
 module Drops where
-
+import Cartas 
+import Jogador
 
 -- 90% 10%
 -- 1,2 e 3,4
@@ -83,7 +84,20 @@ dropar lista = do
 dropar1 :: [Carta] -> Carta
 dropar1 (x:xs) = x
   
+verificaOponente :: Jogador -> Carta
+verificaOponente op
+  |nomeJogador op == "Primeiro período" = drops1
+  |nomeJogador op == "Segundo período" = drops2
+  |nomeJogador op == "Terceiro período" = drops3
+  |nomeJogador op == "Quarto período" = drops4
+  |nomeJogador op == "Quinto período" = drops5
+  |nomeJogador op == "Sexto período" = drops6
+  |nomeJogador op == "Sétimo período" = drops7
+  |nomeJogador op == "Oitavo período" = drops8
+  |otherwise = drops9
 
+addDrop::Jogador -> Jogador -> Jogador 
+addDrop jog opon = Jogador (nomeJogador jog) (verificaOponente opon : (colecao jog)) (deck jog) 8000 [] [] []
 
 
 

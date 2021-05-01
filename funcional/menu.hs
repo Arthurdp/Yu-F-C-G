@@ -53,6 +53,42 @@ menuIniciar =  do
 
 
 
+printMenuDuelo :: IO()
+printMenuDuelo = do
+    putStrLn "\n          #   escolha seu oponente  #\n\n\n"
+    putStrLn "[1] -> Primeiro período"
+    putStrLn "[2] -> Segundo período"
+    putStrLn "[3] -> Terceiro período"
+    putStrLn "[4] -> Quarto período"
+    putStrLn "[5] -> Quinto período"
+    putStrLn "[6] -> Sexto período"
+    putStrLn "[7] -> Setimo período"
+    putStrLn "[8] -> Oitavo período"
+    putStrLn "[8] -> Nono período"
+    putStrLn "[10] -> Sair"
+    putStrLn "\n\nDigite sua opção: "
+
+menuDuelo :: Jogador -> IO()
+menuDuelo jog  = do
+    printMenuDuelo
+    opcao <- getLine
+    let x = read opcao
+    escolheOp x jog
+      
+
+escolheOp:: String -> Jogador -> IO()
+escolheOp x jog
+  |x == "1" = batalha jog periodo1
+      |x == "2" = batalha jog periodo2
+      |x == "3" = batalha jog periodo3
+      |x == "4" = batalha jog periodo4
+      |x == "5" = batalha jog periodo5
+      |x == "6" = batalha jog periodo6
+      |x == "7" = batalha jog periodo7
+      |x == "8" = batalha jog periodo8
+      |x == "9" = batalha jog periodo9
+      |otherwise  = mainMenu
+        
 
 
 
