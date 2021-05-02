@@ -1,5 +1,4 @@
 module Menu where
-import GHC.IO.Encoding
 
 printLogo :: IO ()
 printLogo = do
@@ -20,7 +19,6 @@ menuNome = do
 
 menu :: IO()
 menu = do
-    setLocaleEncoding utf8
     putStrLn "\n #   Menu   #"
     putStrLn "\n "
     putStrLn "[1] -> Campanha"
@@ -32,14 +30,12 @@ menu = do
 
 menuColecao :: IO()
 menuColecao  =  do
-    setLocaleEncoding utf8
     putStrLn "\n          #   colecao  #\n"
     putStrLn "[1] -> Adicionar cartas ao deck"
     putStrLn "[2] -> Sair"
 
 menuDeck :: IO()
 menuDeck  =  do
-    setLocaleEncoding utf8
     putStrLn "\n          #   Deck   #\n"
     putStrLn "[1] -> Colecao"
     putStrLn "[2] -> Remover cartas do deck"
@@ -47,7 +43,6 @@ menuDeck  =  do
 
 printMenuDuelo :: IO()
 printMenuDuelo = do
-    setLocaleEncoding utf8
     putStrLn "\n          #   escolha seu oponente  #\n"
     putStrLn "[1] -> Primeiro periodo"
     putStrLn "[2] -> Segundo periodo"
