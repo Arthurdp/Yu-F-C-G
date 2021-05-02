@@ -348,7 +348,7 @@ batalhaCartasDefesa jogador oponente cartaAtacante cartaAtacada = do
 jogadorPerdeDefesa :: Jogador -> Jogador -> Int -> IO Jogador
 jogadorPerdeDefesa jogador oponente  diferenca = do
     putStr "Sua carta perdeu a batalha. Sua vida diminuiu ;-;"
-    let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) ((vida jogador) + diferenca) (mao jogador) (cartasCampo jogador) (derrotados jogador)
+    let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) ((vida jogador) - diferenca) (mao jogador) (cartasCampo jogador) (derrotados jogador)
     printCampo (vida jogadorBatalha) (vida oponente) (cartasCampo oponente) (cartasCampo jogadorBatalha) (mao jogadorBatalha)
     testaVitoria jogadorBatalha oponente
 
@@ -417,11 +417,9 @@ menuInvocaCartas jogador oponente = do
 
 printMenuModo :: IO()
 printMenuModo = do
-    putStrLn "\n\n"
     putStrLn "\n #-----------Menu de Modo-----------#\n"
     putStrLn "\n\n"
     putStrLn "\n #-----------Qual o modo da carta?-----------#\n"
-    putStrLn "\n"
     putStrLn "\n[1] -> Ataque"
     putStrLn "\n[2] -> Defesa"
     putStrLn "\n\n"
@@ -429,24 +427,17 @@ printMenuModo = do
 
 printMenuAtaqueOpcoes :: IO()
 printMenuAtaqueOpcoes = do
-    putStrLn "\n\n"
-    putStrLn "\n #-----------Menu de Ataque-----------#\n"
-    putStrLn "\n\n"
-    putStrLn "\n #-----------O que quer fazer?-----------#\n"
-    putStrLn "\n"
+    putStrLn "\n #---------------Menu de Ataque---------------#\n"
+    putStrLn "\n #---------O que quer fazer?---------#\n"
     putStrLn "\n[1] -> Atacar"
     putStrLn "\n[2] -> Mudar modo de uma carta"
     putStrLn "\n[3] -> Terminar Turno"
-    putStrLn "\n\n"
     putStrLn "\n\nEscolha uma opcao: "
 
 printMenuAtaque :: Jogador -> IO()
 printMenuAtaque jogador = do
-    putStrLn "\n\n"
-    putStrLn "\n #-----------Menu de Ataque-----------#\n"
-    putStrLn "\n\n"
-    putStrLn "\n #-----------Estas sao as cartas do seu campo-----------#\n"
-    putStrLn "\n"
+    putStrLn "\n #----------------Menu de Ataque----------------#\n"
+    putStrLn "\n #---------Estas sao as cartas do seu campo---------#\n"
     putStrLn ("\n[1] -> " ++ (repCarta (cartasCampo jogador!! 0) ++ repModo (cartasCampo jogador!! 0)))
     putStrLn ("\n[2] -> " ++ (repCarta (cartasCampo jogador!! 1) ++ repModo (cartasCampo jogador!! 1)))
     putStrLn ("\n[3] -> " ++ (repCarta (cartasCampo jogador!! 2) ++ repModo (cartasCampo jogador!! 2)))
@@ -463,17 +454,13 @@ repModo carta
 
 printMenuAtaqueOponente :: Jogador -> IO()
 printMenuAtaqueOponente oponente = do
-    putStrLn "\n\n"
-    putStrLn "\n #-----------Menu de Ataque-----------#\n"
-    putStrLn "\n\n"
-    putStrLn "\n #-----------Estas sao as cartas do campo do oponente-----------#\n"
-    putStrLn "\n"
+    putStrLn "\n #----------------Menu de Ataque----------------#\n"
+    putStrLn "\n #---------Estas sao as cartas do campo do oponente---------#\n"
     putStrLn ("\n[1] -> " ++ (repCarta (cartasCampo oponente!! 0) ++ repModo (cartasCampo oponente!! 0)))
     putStrLn ("\n[2] -> " ++ (repCarta (cartasCampo oponente!! 1) ++ repModo (cartasCampo oponente!! 1)))
     putStrLn ("\n[3] -> " ++ (repCarta (cartasCampo oponente!! 2) ++ repModo (cartasCampo oponente!! 2)))
     putStrLn ("\n[4] -> " ++ (repCarta (cartasCampo oponente!! 3) ++ repModo (cartasCampo oponente!! 3)))
     putStrLn ("\n[5] -> " ++ (repCarta (cartasCampo oponente!! 4) ++ repModo (cartasCampo oponente!! 4)))
-    putStrLn "\n\n"
     putStrLn "\n\nEscolha uma carta para atacar, se nao houver cartas ataque diretamente: "
 
 
