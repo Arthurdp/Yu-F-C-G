@@ -26,7 +26,7 @@ escolher n jog
  |n == 2 = menuDuelo jog
  |n == 3 = gerenciaDeck jog
  |n == 4 = do 
-    putStrLn "ok né... xau"
+    putStrLn "ok ne... xau"
     return jog
 
 analisaFase :: Jogador -> [Jogador] -> [Jogador] -> IO Jogador
@@ -38,7 +38,7 @@ analisaFase jog derrotados (x:xs)
 
 printZerou :: IO()
 printZerou = do
-    putStrLn "\nParabéns!! Você derrotou todos os períodos e se formou. Continue jogando no Free Duel para conseguir todas as cartas, ou selecione 'sair' para sair do jogo\n"
+    putStrLn "\nParabens!! Você derrotou todos os periodos e se formou. Continue jogando no Free Duel para conseguir todas as cartas, ou selecione 'sair' para sair do jogo\n"
  
 mainMenu :: Jogador -> IO Jogador
 mainMenu jog = do
@@ -67,7 +67,7 @@ escolheOp x jog
     |x == 9 && (meuElem periodo9 (derrotados jog)) = batalha jog periodo9
     |x == 10 = mainMenu jog
     |otherwise = do 
-        putStrLn "Opção indisponível, ou jogador bloqueado"
+        putStrLn "Opcao indisponivel, ou jogador bloqueado"
         menuDuelo jog
 
 meuElem :: Jogador -> [Jogador] -> Bool
@@ -112,7 +112,7 @@ batalha jogador oponente = do
     printCampo (vida jogadorBatalha) (vida oponenteBatalha) (cartasCampo oponenteBatalha) (cartasCampo jogadorBatalha) (mao jogadorBatalha)
     menuInvocaCartas jogadorBatalha oponenteBatalha
     cartaInvoc <- getLine
-    let cartaInvocMao = ((mao jogadorBatalha) !! read cartaInvoc )
+    let cartaInvocMao = ((mao jogadorBatalha) !! read cartaInvoc -1)
     
     printMenuModo
     op <- getLine
@@ -129,16 +129,29 @@ batalhaRecursiva jogador oponente = do
     printCampo (vida jogador) (vida oponente) (cartasCampo oponente) (cartasCampo jogador) (mao jogador)
     menuInvocaCartas jogador oponente
     cartaInvoc <- getLine
-    let cartaInvocMao = (mao jogadorBatalha) !! (read cartaInvoc)
+    let cartaInvocMao = (mao jogadorBatalha) !! (read cartaInvoc -1)
 
     printMenuModo
     op <- getLine
     let cartaInvocMao2 = mudaModoInvoc (read op) cartaInvocMao 
 
-    let jogadorBatalha2 = Jogador (nomeJogador jogadorBatalha) (colecao jogadorBatalha) (deck jogadorBatalha) (vida jogadorBatalha) (removeCarta (iD cartaInvocMao2) (mao jogadorBatalha)) (addCarta (iD cartaInvocMao2) (cartasCampo jogadorBatalha) (removeCarta (iD cartaVazia) (cartasCampo jogadorBatalha))) (derrotados jogadorBatalha)
-    printCampo (vida jogadorBatalha2) (vida oponente) (cartasCampo oponente) (cartasCampo jogadorBatalha2) (mao jogadorBatalha2)
+    if length (cartasCampo jogadorBatalha) == 5 then do
+        printMenuCartaCheio jogadorBatalha
+        indexCartaRetira <- getLine
+        let cartaRetira = (cartasCampo jogadorBatalha) !! (indexCartaRetira -1)
+        let jogadorBatalha2 = Jogador (nomeJogador jogadorBatalha) (colecao jogadorBatalha) (deck jogadorBatalha) (vida jogadorBatalha) (removeCarta (iD cartaInvocMao2) (mao jogadorBatalha)) (addCarta (iD cartaInvocMao2) (mao jogadorBatalha) (removeCarta (iD cartaRetira) (cartasCampo jogadorBatalha))) (derrotados jogadorBatalha)
+        printCampo (vida jogadorBatalha2) (vida oponente) (cartasCampo oponente) (cartasCampo jogadorBatalha2) (mao jogadorBatalha2)
+        menuBatalha jogadorBatalha2 oponente
+    else do
+        let jogadorBatalha2 = Jogador (nomeJogador jogadorBatalha) (colecao jogadorBatalha) (deck jogadorBatalha) (vida jogadorBatalha) (removeCarta (iD cartaInvocMao2) (mao jogadorBatalha)) (addCarta (iD cartaInvocMao2) (mao jogadorBatalha) (removeCarta (iD cartaVazia) (cartasCampo jogadorBatalha))) (derrotados jogadorBatalha)
+        printCampo (vida jogadorBatalha2) (vida oponente) (cartasCampo oponente) (cartasCampo jogadorBatalha2) (mao jogadorBatalha2)
+        menuBatalha jogadorBatalha2 oponente
     
-    menuBatalha jogadorBatalha2 oponente
+
+printMenuCartaCheio :: Jogador -> IO()
+printMenuCartaCheio = do
+    putStrLn "Seu campo esta cheio, escolha uma carta para retirar"
+    printMenuAtaque
 
 mudaModoInvoc :: Int -> Carta -> Carta
 mudaModoInvoc op carta 
@@ -161,9 +174,9 @@ menuTrocaModo :: Jogador -> Jogador -> IO Jogador
 menuTrocaModo jogador oponente = do
     printMenuAtaque jogador
     indexCartaJogador <- getLine
-    let cartaJogador = ((cartasCampo jogador) !! (read indexCartaJogador))
+    let cartaJogador = ((cartasCampo jogador) !! (read indexCartaJogador -1))
     if atacou cartaJogador then do
-        putStrLn "Esta carta já atacou não pode mais mudar de modo"
+        putStrLn "Esta carta ja atacou nao pode mais mudar de modo"
         menuTrocaModo jogador oponente
     else do
         let jogadorTroca = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) ((mudaModo (cartasCampo jogador !! read indexCartaJogador)) : (removeCarta (iD ((cartasCampo jogador)!! (read indexCartaJogador))) (cartasCampo jogador))) (derrotados jogador)
@@ -174,35 +187,51 @@ menuAtaque :: Jogador -> Jogador -> IO Jogador
 menuAtaque jogador oponente = do
     printMenuAtaque jogador
     indexCartaJogador <- getLine
-    let cartaJogador = ((cartasCampo jogador) !! read indexCartaJogador)
+    let cartaJogador = ((cartasCampo jogador) !! read indexCartaJogador -1)
     printMenuAtaqueOponente oponente
     indexCartaOponente <- getLine
-    let cartaOponente = ((cartasCampo oponente) !! read indexCartaOponente)
+    let cartaOponente = ((cartasCampo oponente) !! read indexCartaOponente -1)
     batalhaCartas jogador oponente cartaJogador cartaOponente
 
 batalhaOponente :: Jogador -> Jogador -> IO Jogador
 batalhaOponente jogador oponente = do
     let jogadorAtacou = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) (resetaAtacou (cartasCampo jogador)) (derrotados jogador)
-    let oponente1 = Jogador (nomeJogador oponente) (colecao oponente) (removeCarta (iD (draw (deck oponente))) (deck oponente)) (vida oponente) (addCarta (iD (draw (deck oponente))) (deck oponente) (mao oponente)) (cartasCampo oponente) (derrotados oponente)
-    let cartaInvoc = logicaInvoc oponente1
-    let oponente2 = Jogador (nomeJogador oponente1) (colecao oponente1) (deck oponente1) (vida oponente1) (addCartaVazia (removeCarta (iD cartaInvoc) (mao oponente1))) (cartasCampo oponente1) (derrotados oponente1)
-    printCampo (vida jogadorAtacou) (vida oponente2) (cartasCampo oponente2) (cartasCampo jogadorAtacou) (mao jogadorAtacou)
-    ataqueOponente jogadorAtacou oponente2
+    if lenght (cartasCampo oponente) == 5 then do
+        printCampo (vida jogadorAtacou) (vida oponente) (cartasCampo oponente) (cartasCampo jogadorAtacou) (mao jogadorAtacou)
+        ataqueOponente jogadorAtacou oponente
+    else do 
+        let oponente1 = Jogador (nomeJogador oponente) (colecao oponente) (removeCarta (iD (draw (deck oponente))) (deck oponente)) (vida oponente) (addCarta (iD (draw (deck oponente))) (deck oponente) (mao oponente)) (cartasCampo oponente) (derrotados oponente)
+        let cartaInvoc = logicaInvoc oponente1
+        let oponente2 = Jogador (nomeJogador oponente1) (colecao oponente1) (deck oponente1) (vida oponente1) (addCartaVazia (removeCarta (iD cartaInvoc) (mao oponente1))) (cartaInvoc : (removeCarta (iD cartaVazia)(cartasCampo oponente1))) (derrotados oponente1)
+        printCampo (vida jogadorAtacou) (vida oponente2) (cartasCampo oponente2) (cartasCampo jogadorAtacou) (mao jogadorAtacou)
+        ataqueOponente jogadorAtacou oponente2
 
 ataqueOponente :: Jogador -> Jogador -> IO Jogador
 ataqueOponente jogador oponente = do
     printCampo (vida jogador) (vida oponente) (cartasCampo oponente) (cartasCampo jogador) (mao jogador)
     testaVitoriaOponente jogador oponente
-    let cartaDerrotada = logicaAtaque (cartasCampo jogador) (cartasCampo oponente)
-    let cartaAtacante = achaAtaqueMaisForte (cartasCampo oponente) (ataqueMaisForte (cartasCampo oponente))
-    let cartaAtacou = alteraStatusAtacouTrue cartaAtacante
-    let oponenteAtacou = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) (cartaAtacou : (removeCarta (iD cartaAtacou) (cartasCampo jogador))) (derrotados jogador)
-    if (iD cartaDerrotada) == 00 then do
+    if testaAtaqueDireto (cartasCampo jogador) then do
+
+    else if todasAtacou (cartasCampo oponenteAtacou) then do
+        let oponenteAtacou2 = Jogador (nomeJogador oponenteAtacou) (colecao oponenteAtacou) (deck oponenteAtacou) (vida oponenteAtacou) (mao oponenteAtacou) (resetaAtacou (tudoDefesa(cartasCampo oponenteAtacou))) (derrotados oponenteAtacou)
+        batalhaRecursiva jogador oponenteAtacou2
+    else if (iD cartaDerrotada) == 00 then do
         printCampo (vida jogador) (vida oponenteAtacou) (cartasCampo oponenteAtacou) (cartasCampo jogador) (mao jogador)
-        let oponenteAtacou = Jogador (nomeJogador oponenteAtacou) (colecao oponenteAtacou) (deck oponenteAtacou) (vida oponenteAtacou) (mao oponenteAtacou) (resetaAtacou (tudoDefesa(cartasCampo oponenteAtacou))) (derrotados oponenteAtacou)
-        batalhaRecursiva jogador oponenteAtacou
+        let oponenteAtacou2 = Jogador (nomeJogador oponenteAtacou) (colecao oponenteAtacou) (deck oponenteAtacou) (vida oponenteAtacou) (mao oponenteAtacou) (resetaAtacou (tudoDefesa(cartasCampo oponenteAtacou))) (derrotados oponenteAtacou)
+        batalhaRecursiva jogador oponenteAtacou2
     else do
         testaVitoriaOponente (destroiCartaJogador jogador cartaAtacou cartaDerrotada) oponenteAtacou
+    where 
+        cartaDerrotada = logicaAtaque (cartasCampo jogador) (cartasCampo oponente)
+        cartaAtacante = achaAtaqueMaisForte (cartasCampo oponente) (ataqueMaisForte (cartasCampo oponente))
+        cartaAtacou = alteraStatusAtacouTrue cartaAtacante
+        oponenteAtacou = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) (cartaAtacou : (removeCarta (iD cartaAtacou) (cartasCampo jogador))) (derrotados jogador)
+
+todasAtacou :: [Carta] -> Bool
+todasAtacou [] = True
+todasAtacou (x:xs)
+    | (atacou x) = todasAtacou xs
+    | otherwise = False
 
 destroiCartaJogador :: Jogador -> Carta -> Carta -> Jogador
 destroiCartaJogador jogador cartaAtacante cartaAtacada = do
@@ -227,21 +256,40 @@ logicaInvoc oponente = do
         mudaModoDefesa cartaDefesa
 
 batalhaCartas :: Jogador -> Jogador -> Carta -> Carta -> IO Jogador
-batalhaCartas jogador oponente cartaAtacante cartaAtacada
-    | not (modoAtaque cartaAtacante) = erroCartaEmDefesa jogador oponente
-    | not (atacou cartaAtacante) = erroCartaAtacou jogador oponente
-    | modoAtaque cartaAtacada = batalhaCartasAtaque jogador oponente cartaAtacante cartaAtacada
-    | otherwise = batalhaCartasDefesa jogador oponente cartaAtacante cartaAtacada
+batalhaCartas jogador oponente cartaAtacante cartaAtacada = do
+    if testaAtaqueDireto (cartasCampo oponente) then do
+        let oponenteDireto = Jogador (nomeJogador oponente) (colecao oponente) (deck oponente) (vida oponente - (ataque cartaAtacante)) (mao oponente) (cartasCampo oponente) (derrotados oponenteAtacou)
+        let cartaAtacou = alteraStatusAtacouTrue cartaAtacante
+        let jogadorAtacou = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) (cartaAtacou : (removeCarta (iD cartaAtacou) (cartasCampo jogador))) (derrotados jogador)
+        menuAtaque jogadorAtacou oponenteDireto
+    else if (iD cartaAtacada) == 00 then erroCartaVazia jogador oponente
+    else if not (modoAtaque cartaAtacante) then erroCartaEmDefesa jogador oponente
+    else if not (atacou cartaAtacante) then erroCartaAtacou jogador oponente
+    else if modoAtaque cartaAtacada then batalhaCartasAtaque jogador oponente cartaAtacante cartaAtacada
+    else
+         batalhaCartasDefesa jogador oponente cartaAtacante cartaAtacada
+
+erroCartaVazia :: Jogador -> Jogador -> IO Jogador
+erroCartaVazia jogador oponente = do
+    putStrLn "Voce nao escolheu uma carta... escolha novamente"
+    printCampo (vida jogador) (vida oponente) (cartasCampo oponente) (cartasCampo jogador) (mao jogador)
+    menuAtaque jogador oponente
+
+isCampoVazio :: [Carta] -> Bool
+isCampoVazio [] = True
+isCampoVazio (x:xs)
+    | (iD x) == iD cartaVazia = isCampoVazio xs
+    | otherwise = False
 
 erroCartaEmDefesa :: Jogador -> Jogador -> IO Jogador
 erroCartaEmDefesa jogador oponente = do
-    putStrLn  "Carta em modo de Defesa não pode atacar... escolha novamente"
+    putStrLn  "Carta em modo de Defesa nao pode atacar... escolha novamente"
     printCampo (vida jogador) (vida oponente) (cartasCampo oponente) (cartasCampo jogador) (mao jogador)
     menuAtaque jogador oponente
 
 erroCartaAtacou :: Jogador -> Jogador -> IO Jogador
 erroCartaAtacou jogador oponente = do
-    putStrLn  "A carta que você escolheu já atacou... escolha novamente"
+    putStrLn  "A carta que você escolheu ja atacou... escolha novamente"
     printCampo (vida jogador) (vida oponente) (cartasCampo oponente) (cartasCampo jogador) (mao jogador)
     menuAtaque jogador oponente
 
@@ -266,13 +314,13 @@ resetaAtacou (x:xs) = (alteraStatusAtacouFalse x) : (resetaAtacou xs)
 
 empateDef :: Jogador -> Jogador -> IO Jogador
 empateDef jogador oponente = do
-    putStr "As cartas tem o mesmo nível de força e empataram, nenhuma foi destruída"
+    putStr "As cartas tem o mesmo nivel de forca e empataram, nenhuma foi destruida"
     printCampo (vida jogador) (vida oponente) (cartasCampo oponente) (cartasCampo jogador) (mao jogador)
     menuBatalha jogador oponente
 
 empateAtq :: Jogador -> Jogador -> Carta -> Carta -> IO Jogador
 empateAtq jogador oponente cartaAtacante cartaAtacada = do
-    putStr "As cartas tem o mesmo nível de força e empataram, as duas foram destruídas"
+    putStr "As cartas tem o mesmo nivel de forca e empataram, as duas foram destruidas"
     let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) (addCartaVazia (removeCarta (iD cartaAtacante) (cartasCampo jogador))) (derrotados jogador)
     let oponenteBatalha = Jogador (nomeJogador oponente) (colecao oponente) (deck oponente) (vida oponente) (mao oponente) (addCartaVazia (removeCarta (iD cartaAtacada) (cartasCampo oponente))) (derrotados oponente)
     printCampo (vida jogadorBatalha) (vida oponenteBatalha) (cartasCampo oponenteBatalha) (cartasCampo jogadorBatalha) (mao jogadorBatalha)
@@ -280,14 +328,14 @@ empateAtq jogador oponente cartaAtacante cartaAtacada = do
 
 jogadorPerdeAtaque :: Jogador -> Jogador -> Carta -> Int -> IO Jogador
 jogadorPerdeAtaque jogador oponente carta diferenca = do
-    putStr "Sua carta perdeu a batalha. Sua carta foi destruída e sua vida diminuiu ;-;"
+    putStr "Sua carta perdeu a batalha. Sua carta foi destruida e sua vida diminuiu ;-;"
     let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) ((vida jogador) + diferenca) (mao jogador) (addCartaVazia (removeCarta (iD carta) (cartasCampo jogador))) (derrotados jogador)
     printCampo (vida jogadorBatalha) (vida oponente) (cartasCampo oponente) (cartasCampo jogadorBatalha) (mao jogadorBatalha)
     testaVitoria jogadorBatalha oponente
 
 jogadorGanhaAtaque :: Jogador -> Jogador -> Carta -> Int -> IO Jogador
 jogadorGanhaAtaque jogador oponente carta diferenca = do
-    putStr "Sua carta ganhou a batalha . A carta do oponente foi destruída e a vida dele diminuiu :D"
+    putStr "Sua carta ganhou a batalha . A carta do oponente foi destruida e a vida dele diminuiu :D"
     let oponenteBatalha = Jogador (nomeJogador oponente) (colecao oponente) (deck oponente) ((vida oponente) - diferenca) (mao oponente) (addCartaVazia (removeCarta (iD carta) (cartasCampo oponente))) (derrotados oponente)
     printCampo (vida jogador) (vida oponenteBatalha) (cartasCampo oponenteBatalha) (cartasCampo jogador) (mao jogador)
     testaVitoria jogador oponenteBatalha
@@ -310,7 +358,7 @@ jogadorPerdeDefesa jogador oponente  diferenca = do
 
 jogadorGanhaDefesa :: Jogador -> Jogador -> Carta -> IO Jogador
 jogadorGanhaDefesa jogador oponente carta = do
-    putStr "Sua carta ganhou a batalha. A carta do oponente foi destruída"
+    putStr "Sua carta ganhou a batalha. A carta do oponente foi destruida"
     let oponenteBatalha = Jogador (nomeJogador oponente) (colecao oponente) (deck oponente) (vida oponente) (mao oponente) (addCartaVazia (removeCarta (iD carta) (cartasCampo oponente))) (derrotados oponente)
     printCampo (vida jogador) (vida oponenteBatalha) (cartasCampo oponenteBatalha) (cartasCampo jogador) (mao jogador)
     testaVitoria jogador oponenteBatalha
@@ -320,15 +368,15 @@ calculaDiferenca cartaAtacante cartaAtacada = cartaAtacante - cartaAtacada
 
 testaVitoria :: Jogador -> Jogador -> IO Jogador
 testaVitoria jogador oponente = do
-    if (vida jogador) == 0 then (printLoose jogador)
-    else if (vida oponente) == 0 then (printWin jogador oponente)
+    if (vida jogador) <= 0 then (printLoose jogador)
+    else if (vida oponente) <= 0 then (printWin jogador oponente)
     else
         menuBatalha jogador oponente
 
 testaVitoriaOponente :: Jogador -> Jogador -> IO Jogador
 testaVitoriaOponente jogador oponente = do
-    if (vida jogador) == 0 then (printLoose jogador)
-    else if (vida oponente) == 0 then (printWin jogador oponente)
+    if (vida jogador) <= 0 then (printLoose jogador)
+    else if (vida oponente) <= 0 then (printWin jogador oponente)
     else
         ataqueOponente jogador oponente
 
@@ -358,9 +406,9 @@ menuInvocaCartas :: Jogador -> Jogador -> IO()
 menuInvocaCartas jogador oponente = do
     --printMenuInvocaCartas
     putStrLn "\n\n"
-    putStrLn "\n #-----------Menu de Invocação-----------#\n"
+    putStrLn "\n #-----------Menu de Invocacao-----------#\n"
     putStrLn "\n\n"
-    putStrLn "\n #-----------Estas são as cartas da sua mão-----------#\n"
+    putStrLn "\n #-----------Estas sao as cartas da sua mao-----------#\n"
     putStrLn "\n"
     putStrLn ("\n[1] -> " ++ repCarta ((mao jogador)!! 0 ))
     putStrLn ("\n[2] -> " ++ repCarta ((mao jogador)!! 1 ))
@@ -380,7 +428,7 @@ printMenuModo = do
     putStrLn "\n[1] -> Ataque"
     putStrLn "\n[2] -> Defesa"
     putStrLn "\n\n"
-    putStrLn "\n\nEscolha uma opção: "
+    putStrLn "\n\nEscolha uma opcao: "
 
 printMenuAtaqueOpcoes :: IO()
 printMenuAtaqueOpcoes = do
@@ -393,14 +441,14 @@ printMenuAtaqueOpcoes = do
     putStrLn "\n[2] -> Mudar modo de uma carta"
     putStrLn "\n[3] -> Terminar Turno"
     putStrLn "\n\n"
-    putStrLn "\n\nEscolha uma opção: "
+    putStrLn "\n\nEscolha uma opcao: "
 
 printMenuAtaque :: Jogador -> IO()
 printMenuAtaque jogador = do
     putStrLn "\n\n"
     putStrLn "\n #-----------Menu de Ataque-----------#\n"
     putStrLn "\n\n"
-    putStrLn "\n #-----------Estas são as cartas do seu campo-----------#\n"
+    putStrLn "\n #-----------Estas sao as cartas do seu campo-----------#\n"
     putStrLn "\n"
     putStrLn ("\n[1] -> " ++ (repCarta (cartasCampo jogador!! 0) ++ repModo (cartasCampo jogador!! 0)))
     putStrLn ("\n[2] -> " ++ (repCarta (cartasCampo jogador!! 1) ++ repModo (cartasCampo jogador!! 1)))
@@ -421,7 +469,7 @@ printMenuAtaqueOponente oponente = do
     putStrLn "\n\n"
     putStrLn "\n #-----------Menu de Ataque-----------#\n"
     putStrLn "\n\n"
-    putStrLn "\n #-----------Estas são as cartas do campo do oponente-----------#\n"
+    putStrLn "\n #-----------Estas sao as cartas do campo do oponente-----------#\n"
     putStrLn "\n"
     putStrLn ("\n[1] -> " ++ (repCarta (cartasCampo oponente!! 0) ++ repModo (cartasCampo oponente!! 0)))
     putStrLn ("\n[2] -> " ++ (repCarta (cartasCampo oponente!! 1) ++ repModo (cartasCampo oponente!! 1)))
@@ -429,7 +477,7 @@ printMenuAtaqueOponente oponente = do
     putStrLn ("\n[4] -> " ++ (repCarta (cartasCampo oponente!! 3) ++ repModo (cartasCampo oponente!! 3)))
     putStrLn ("\n[5] -> " ++ (repCarta (cartasCampo oponente!! 4) ++ repModo (cartasCampo oponente!! 4)))
     putStrLn "\n\n"
-    putStrLn "\\n\nEscolha uma carta para atacar, se não houver cartas ataque diretamente: "
+    putStrLn "\n\nEscolha uma carta para atacar, se nao houver cartas ataque diretamente: "
 
 
 
@@ -480,7 +528,7 @@ printCampoJogador cartas = "\
 
 printMao :: [Carta] -> String
 printMao cartas = "\
-\\n-------------------Sua Mão-------------------\
+\\n-------------------Sua Mao-------------------\
 \\n\
 \\n|||||||||||||||||||||||||||||||||||||||||||||\
 \\n|       ||       ||       ||       ||       |\n"
@@ -531,7 +579,7 @@ removeCartaDeck jog = do
 verificaAdd :: Int -> Jogador -> IO Jogador
 verificaAdd i jog
  |not (contem i (colecao jog)) = do
-  putStrLn "Você não possui esta carta."
+  putStrLn "Voce nao possui esta carta."
   gerenciaDeck jog
  |length (deck jog) >= 20 = do
   putStrLn "Deck cheio, remova uma carta antes de adicionar outra."
@@ -551,13 +599,13 @@ vizualizaColecaoOp op jog
  |op == "1" = adicionaCartaDeck jog
  |op == "2" = gerenciaDeck jog
  |otherwise = do
-  putStrLn "opção inválida"
+  putStrLn "opção invalida"
   vizualizaColecao jog
 
 vizualizaColecao :: Jogador -> IO Jogador
 vizualizaColecao jog = do
  menuColecao
- putStrLn "Coleção:"
+ putStrLn "Colecao:"
  putStrLn (repLista (colecao jog))
  putStrLn "(1)Adicionar carta ao Deck \n(2)Deck"
  opcao <- getLine
@@ -565,13 +613,13 @@ vizualizaColecao jog = do
 
 vizualizaDeck :: Jogador -> IO()
 vizualizaDeck jog = do
- putStrLn "Esse é seu deck:"
+ putStrLn "Esse e seu deck:"
  putStrLn (repLista (deck jog))
 
 verificaVolta :: Jogador -> IO Jogador
 verificaVolta jog
  |length(deck jog) < 20 = do
-  putStrLn "deck incompleto, tenha 20 cartas no deck para voltar."
+  putStrLn "Deck incompleto, tenha 20 cartas no deck para voltar."
   gerenciaDeck jog
  |otherwise = mainMenu jog
 
@@ -581,7 +629,7 @@ gerenciaDeckOp op jog
  |op == "2" = removeCartaDeck jog
  |op == "3" = verificaVolta jog
  |otherwise = do
-  putStrLn "opção inválida"
+  putStrLn "opcao invalida"
   gerenciaDeck jog
 
 gerenciaDeck :: Jogador -> IO Jogador
@@ -700,14 +748,14 @@ dropar1 (x:xs) = x
   
 verificaOponente :: Jogador -> Carta
 verificaOponente op
-  |nomeJogador op == "Primeiro período" = drops1
-  |nomeJogador op == "Segundo período" = drops2
-  |nomeJogador op == "Terceiro período" = drops3
-  |nomeJogador op == "Quarto período" = drops4
-  |nomeJogador op == "Quinto período" = drops5
-  |nomeJogador op == "Sexto período" = drops6
-  |nomeJogador op == "Sétimo período" = drops7
-  |nomeJogador op == "Oitavo período" = drops8
+  |nomeJogador op == "Primeiro periodo" = drops1
+  |nomeJogador op == "Segundo periodo" = drops2
+  |nomeJogador op == "Terceiro periodo" = drops3
+  |nomeJogador op == "Quarto periodo" = drops4
+  |nomeJogador op == "Quinto periodo" = drops5
+  |nomeJogador op == "Sexto periodo" = drops6
+  |nomeJogador op == "Setimo periodo" = drops7
+  |nomeJogador op == "Oitavo periodo" = drops8
   |otherwise = drops9
 
 addDrop::Jogador -> Jogador -> Jogador 
