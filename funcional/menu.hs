@@ -3,7 +3,7 @@ import GHC.IO.Encoding
 
 printLogo :: IO ()
 printLogo = do
-    putStrLn "  Y88b   d88P                   8888888888         d8888b              d8888b"
+    putStrLn "\n  Y88b   d88P                   8888888888         d8888b              d8888b"
     putStrLn "   Y88b d88P                    888               d88P  Y88b         d88P  Y88b"
     putStrLn "    Y88o88P                     888               888    888         888    888"
     putStrLn "     Y888P     888   888        8888888           888                888"
@@ -16,20 +16,18 @@ printLogo = do
 
 menuNome :: IO()
 menuNome = do
-    putStrLn "\n "
     putStrLn "\nDigite seu nome: "
 
 menu :: IO()
 menu = do
     setLocaleEncoding utf8
-    putStrLn "\n"
     putStrLn "\n #   Menu   #"
     putStrLn "\n "
     putStrLn "[1] -> Campanha"
     putStrLn "[2] -> Duelo livre"
     putStrLn "[3] -> Deck"
     putStrLn "[4] -> Sair"
-    putStrLn "\n"
+    putStrLn ""
     putStrLn "\nDigite sua escolha: "
 
 menuColecao :: IO()

@@ -10,3 +10,4 @@ data Jogador = Jogador{
     cartasCampo :: [Carta],
     derrotados :: [Jogador]
 } deriving (Show)
+
