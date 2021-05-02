@@ -712,23 +712,23 @@ logicaAtaque carta jogador oponente
 verificaMenorD :: Carta -> [Carta]-> Bool
 verificaMenorD carta [] = False
 verificaMenorD carta (x:xs)
- |(ataque carta) > defesa x = True
+ |((ataque carta) > defesa x) && (not (iD x == 00)) = True
  |otherwise = verificaMenorD carta xs
 
 pegaMenorD :: Carta -> [Carta] -> Carta
 pegaMenorD carta (x:xs)
- |(ataque carta) > defesa x = x
+ |((ataque carta) > defesa x) && (not (iD x == 00)) = x
  |otherwise = pegaMenorD carta xs
 
 verificaMenorA :: Carta -> [Carta]-> Bool
 verificaMenorA carta [] = False
 verificaMenorA carta (x:xs)
- |(ataque carta) > ataque x = True
+ |((ataque carta) > ataque x) && (not (iD x == 00)) = True
  |otherwise = verificaMenorA carta xs
 
 pegaMenorA :: Carta -> [Carta] -> Carta
 pegaMenorA carta (x:xs)
- |(ataque carta) > ataque x = x
+ |((ataque carta) > ataque x) && (not (iD x == 001)) = x
  |otherwise = pegaMenorA carta xs
 
 geraDeckEmbaralhado :: [Carta] -> [Carta]
