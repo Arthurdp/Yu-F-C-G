@@ -491,8 +491,9 @@ printLoose jogador = do
 printWin :: Jogador -> Jogador -> IO Jogador
 printWin jogador oponente = do
     putStrLn "\n------------------You Win-------------\n"
-    putStrLn "\n------------Voce ganhou a carta...-------------\n"
-    let jogadorWin = addDrop jogador oponente
+    let card = verificaOponente oponente
+    putStrLn "\n------------Voce ganhou a carta " ++ repCarta card ++ " -------------\n"
+    let jogadorWin = addDrop card jogador oponente
     mainMenu Jogador (nomeJogador jogadorWin) (colecao jogadorWin) (take 20 (reverse (deck jogadorWin))) (vida jogadorWin) (mao jogadorWin) (cartasCampo jogadorWin) (derrotados jogadorWin)
 
 printLinhaCartas :: [Carta] -> String
@@ -760,8 +761,8 @@ verificaOponente op
   |nomeJogador op == "Oitavo periodo" = drops8
   |otherwise = drops9
 
-addDrop::Jogador -> Jogador -> Jogador 
-addDrop jog opon = Jogador (nomeJogador jog) (verificaOponente opon : (colecao jog)) (deck jog) 8000 [] [] (derrotados jog)
+addDrop:: Carta -> Jogador -> Jogador -> Jogador 
+addDrop card jog opon = Jogador (nomeJogador jog) (card: (colecao jog)) (deck jog) 8000 [] [] (derrotados jog)
 
 -- 90% 10%
 -- 1,2 e 3,4
