@@ -105,7 +105,7 @@ tudoDefesa (x:xs)
 batalha :: Jogador -> Jogador -> IO Jogador
 batalha jogador oponente = do
     let deckEmbaralhadoJogador = geraDeckEmbaralhado (deck jogador)
-    let deckEmbaralhadoOponente = geraDeckEmbaralhado (deck oponente)
+    let deckEmbaralhadoOponente = concat (replicate 2 (geraDeckEmbaralhado (deck oponente)))
     let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) deckEmbaralhadoJogador (vida jogador) (geraMao deckEmbaralhadoJogador) (replicate 5 cartaVazia) (derrotados jogador)
     let oponenteBatalha = Jogador (nomeJogador oponente) (colecao oponente) deckEmbaralhadoOponente (vida oponente) (geraMao4 deckEmbaralhadoOponente) (replicate 5 cartaVazia) (derrotados oponente)
 
@@ -370,6 +370,7 @@ testaVitoria :: Jogador -> Jogador -> IO Jogador
 testaVitoria jogador oponente = do
     if (vida jogador) <= 0 then (printLoose jogador)
     else if (vida oponente) <= 0 then (printWin jogador oponente)
+    else if lenght (deck jogador) == 20 then (printLoose jogador)
     else
         menuBatalha jogador oponente
 
@@ -484,6 +485,7 @@ printMenuAtaqueOponente oponente = do
 printLoose :: Jogador -> IO Jogador
 printLoose jogador = do
     putStrLn "\n-----------You Loose------------\n"
+    putStrLn "\n-----------Sua vida chegou a 0 ou suas cartas acabaram------------\n"
     mainMenu jogador
 
 printWin :: Jogador -> Jogador -> IO Jogador
@@ -491,7 +493,7 @@ printWin jogador oponente = do
     putStrLn "\n------------------You Win-------------\n"
     putStrLn "\n------------Voce ganhou a carta...-------------\n"
     let jogadorWin = addDrop jogador oponente
-    mainMenu jogadorWin
+    mainMenu Jogador (nomeJogador jogadorWin) (colecao jogadorWin) (take 20 (reverse (deck jogadorWin))) (vida jogadorWin) (mao jogadorWin) (cartasCampo jogadorWin) (derrotados jogadorWin)
 
 printLinhaCartas :: [Carta] -> String
 printLinhaCartas [] = ""
