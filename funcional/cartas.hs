@@ -21,16 +21,16 @@ sePerdeu :: Carta
 sePerdeu = Carta 1 "Se perdeu no Campus" 900 700 True  False
 
 matematicaBasica :: Carta
-matematicaBasica = Carta 2  "Matemática básica" 500 700 True  False 
+matematicaBasica = Carta 2  "Matematica basica" 500 700 True  False 
 
 empolgacao :: Carta
-empolgacao = Carta 3  "Empolgação" 900 600 True  False 
+empolgacao = Carta 3  "Empolgacao" 900 600 True  False 
 
 fome :: Carta
 fome = Carta 4 "Fome" 800 500 True  False 
 
 perdeuOnibus :: Carta
-perdeuOnibus = Carta 5  "Perdeu ônibus" 600 750 True  False 
+perdeuOnibus = Carta 5  "Perdeu onibus" 600 750 True  False 
 
 esquecimento :: Carta
 esquecimento = Carta 6 "Esquecimento" 800 700 True  False
@@ -51,19 +51,19 @@ fe :: Carta
 fe = Carta 11 "fe" 700 800 True  False
 
 repProgramacao1 :: Carta
-repProgramacao1 = Carta 12 "Reposição Programação 1" 700 500 True  False
+repProgramacao1 = Carta 12 "Reposicao Programacao 1" 700 500 True  False
 
 programacao2 :: Carta
-programacao2 = Carta 13 "Programação 2" 800 500 True  False
+programacao2 = Carta 13 "Programacao 2" 800 500 True  False
 
 repProgramacao2 :: Carta
-repProgramacao2 = Carta 14 "Reposição Programação 2" 900 600 True  False
+repProgramacao2 = Carta 14 "Reposicao Programacao 2" 900 600 True  False
 
 monitorProgramacao1 :: Carta
-monitorProgramacao1 = Carta 15 "Monitor de Programação 1" 800 400 True  False
+monitorProgramacao1 = Carta 15 "Monitor de Programacao 1" 800 400 True  False
 
 monitorProgramacao2 :: Carta
-monitorProgramacao2 = Carta 16 "Monitor de Programação 2" 1000 400 True  False
+monitorProgramacao2 = Carta 16 "Monitor de Programacao 2" 1000 400 True  False
 
 uniao :: Carta
 uniao = Carta 17 "uniao" 800 1000 True  False
@@ -78,7 +78,7 @@ galdencioAmansado :: Carta
 galdencioAmansado = Carta 20 "professor galdencio manso" 900 800 True  False
 
 joseFernando :: Carta
-joseFernando = Carta 21 "professor josé fernando" 950 500 True  False
+joseFernando = Carta 21 "professor jose fernando" 950 500 True  False
 
 eanesBenevolente :: Carta
 eanesBenevolente = Carta 22 "eanes em estado de benevolencia" 500 900 True  False
@@ -114,19 +114,19 @@ eda :: Carta
 eda = Carta 31 "EDA" 1200 1000 True  False
 
 repEDA :: Carta
-repEDA = Carta 32 "Reposição de EDA (Dalba não perdoará)" 1200 1500 True  False
+repEDA = Carta 32 "Reposicao de EDA (Dalba não perdoara)" 1200 1500 True  False
 
 leda :: Carta
 leda = Carta 33 "LEDA" 1200 1000 True  False
 
 repLEDA :: Carta
-repLEDA = Carta 34 "Reposição de LEDA (Tá ferrado)" 1200 1500 True  False
+repLEDA = Carta 34 "Reposicao de LEDA (Ta ferrado)" 1200 1500 True  False
 
 bd1 :: Carta
 bd1 = Carta 35 "Banco de dados 1" 1100 1300 True  False 
 
 preguica :: Carta
-preguica = Carta 36 "Preguiça" 1500 1200 True  False 
+preguica = Carta 36 "Preguica" 1500 1200 True  False 
 
 roubo :: Carta
 roubo = Carta 37 "Roubo"  1250 1400 True  False 
@@ -185,7 +185,7 @@ crise :: Carta
 crise = Carta 54 "A crise do meio do curso" 1650 1600 True  False
 
 ead :: Carta
-ead = Carta 55 "o curso agora é EAD" 1900 1800 True  False
+ead = Carta 55 "o curso agora e EAD" 1900 1800 True  False
 
 prazo :: Carta
 prazo = Carta 56 "Trabalho com prazo curto" 1800 1700 True  False
@@ -194,22 +194,22 @@ optativasDo6 :: Carta
 optativasDo6 = Carta 57 "Escolher as optativa do 6periodo" 1600 1600 True  False
 
 perdido :: Carta
-perdido = Carta 58 "Você está perdido no curso" 1900 1850 True  False
+perdido = Carta 58 "Voce esta perdido no curso" 1900 1850 True  False
 
 estatistica :: Carta
-estatistica = Carta 59 "Estatística Aplicada" 1600 1000 True  False
+estatistica = Carta 59 "Estatistica Aplicada" 1600 1000 True  False
 
 engenhariaSoft :: Carta
 engenhariaSoft = Carta 60 "Engenharia de Software" 1700 1300 True  False
 
 repEstatistica :: Carta
-repEstatistica = Carta 61 "Reposição de Estatística Aplicada" 1700 1000 True  False
+repEstatistica = Carta 61 "Reposicao de Estatistica Aplicada" 1700 1000 True  False
 
 repEngenhariaSoft :: Carta
-repEngenhariaSoft = Carta 62 "Reposição de Engenharia de Software" 1800 1300 True  False
+repEngenhariaSoft = Carta 62 "Reposicao de Engenharia de Software" 1800 1300 True  False
 
 iA :: Carta
-iA = Carta 63 "Inteligência Artificial" 1800 1700 True  False
+iA = Carta 63 "Inteligencia Artificial" 1800 1700 True  False
 
 pato :: Carta
 pato = Carta 64 "Pato" 1700 1600 True  False
@@ -224,7 +224,7 @@ metodologiaCientifica :: Carta
 metodologiaCientifica = Carta 67 "Metodologia cientifica" 1800 1700 True  False 
 
 wifi :: Carta
-wifi = Carta 68 "Wi-fi" 1600 1900 True  False
+wifi = Carta 68 "Wi fi" 1600 1900 True  False
 
 desmotivacao :: Carta
 desmotivacao = Carta 69 "Desmotivacao" 1600 1600 True  False
@@ -268,13 +268,13 @@ compiladores :: Carta
 compiladores = Carta 81 "Compiladores" 2100 1500 True  False
 
 projetoEmComputacao1 :: Carta
-projetoEmComputacao1 = Carta 82 "Projeto em computação 1" 2500 2000 True  False
+projetoEmComputacao1 = Carta 82 "Projeto em computacao 1" 2500 2000 True  False
 
 estagio :: Carta
-estagio = Carta 83 "Estágio" 2400 1500 True  False
+estagio = Carta 83 "Estagio" 2400 1500 True  False
 
 repCompiladores :: Carta
-repCompiladores = Carta 84 "Reposição de Compiladores" 2200 1500 True  False
+repCompiladores = Carta 84 "Reposicao de Compiladores" 2200 1500 True  False
 
 sorte :: Carta
 sorte = Carta 85 "Sorte" 2100 2200 True  False 
@@ -283,13 +283,13 @@ amizade :: Carta
 amizade = Carta 86 "Amizade" 2400 2200 True  False 
 
 vicio :: Carta
-vicio = Carta 87 "Vício" 2500 2100 True  False 
+vicio = Carta 87 "Vicio" 2500 2100 True  False 
 
 iguana :: Carta
 iguana = Carta 88 "Iguana" 2200 2500 True  False 
 
 dorDeCabeca :: Carta
-dorDeCabeca = Carta 89 "Dor de cabeça" 2300 2000 True  False
+dorDeCabeca = Carta 89 "Dor de cabeca" 2300 2000 True  False
 
 cheirado :: Carta
 cheirado = Carta 90 "aluno cheirador (aspirador fica pra traz)" 2400 2250 True  False
@@ -312,7 +312,7 @@ gaudencioPossesso = Carta 95 "professor gaudencio possuido por espirito de ira" 
 --Cartas 9 periodo
 
 colacao :: Carta
-colacao = Carta 95 "colação de grau " 2700 2450 True  False
+colacao = Carta 95 "colacao de grau " 2700 2450 True  False
 
 formaturaCara :: Carta
 formaturaCara = Carta 97 "formatura o zoi da Cara" 2800 2600 True  False
@@ -321,7 +321,7 @@ tcc :: Carta
 tcc = Carta 98 "Compiladores" 1000 3000 True  False 
 
 projetoEmComputacao2 :: Carta
-projetoEmComputacao2 = Carta 99 "Projeto em computação 2" 2700 2000 True  False 
+projetoEmComputacao2 = Carta 99 "Projeto em computacao 2" 2700 2000 True  False 
 
 emprego :: Carta
 emprego = Carta 100 "Emprego" 2900 2500 True  False
@@ -336,10 +336,10 @@ fimDoMundo :: Carta
 fimDoMundo = Carta 103 "Fim do Mundo" 2900 2600 True  False
 
 insonia :: Carta
-insonia = Carta 104 "Insônia" 2700 2500 True  False 
+insonia = Carta 104 "Insonia" 2700 2500 True  False 
 
 jacare :: Carta
-jacare = Carta 105 "Jacaré" 2800 2700 True  False 
+jacare = Carta 105 "Jacare" 2800 2700 True  False 
 
 procurandoEmprego :: Carta
 procurandoEmprego = Carta 106 "aluno procurando emprego antes de se formar" 2600 2900 True  False
