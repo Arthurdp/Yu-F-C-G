@@ -7,13 +7,15 @@ import Jogador
 import Cartas
 
   
-main :: IO Jogador
+main :: IO()
 main = do
  printLogo
  nome <- getLine
  putStrLn( "\nBem vindo " ++ nome)
- let jog = Jogador nome [] [fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster, falheiEmTudo, fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster, falheiEmTudo, fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster] 8000 [] [] []
- mainMenu jog
+ let jog = Jogador nome [] [matematicaBasica, livia  , python, fe, repProgramacao1,repProgramacao1, eanesBenevolente, robertKalley, matematicaBasica, livia, python, fe,repProgramacao1, robertKalley, eanesBenevolente, robertKalley, perdeuOnibus, python,perdeuOnibus,fe] 8000 [] [] []
+ forever $ do 
+    mainMenu jog
+ putStrLn "ok ne... xau"
 
 escolher :: Int -> Jogador -> IO Jogador
 escolher n jog
@@ -23,7 +25,6 @@ escolher n jog
  |n == 2 = menuDuelo jog
  |n == 3 = gerenciaDeck jog
  |n == 4 = do 
-    putStrLn "ok ne... xau"
     return jog
 
 analisaFase :: Jogador -> [Jogador] -> [Jogador] -> IO Jogador
