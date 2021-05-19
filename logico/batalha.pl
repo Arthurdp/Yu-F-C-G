@@ -1,0 +1,4 @@
+%batalha
+
+batalha(Jog,Opo) :- 
+    
