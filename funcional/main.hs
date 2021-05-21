@@ -1,5 +1,6 @@
 module Main where
 
+import GHC.IO.Encoding
 import System.IO.Unsafe
 import System.Random (randomRIO)
 import Menu
@@ -7,15 +8,14 @@ import Jogador
 import Cartas
 
   
-main :: IO()
+main :: IO Jogador
 main = do
+ setLocaleEncoding utf8
  printLogo
  nome <- getLine
  putStrLn( "\nBem vindo " ++ nome)
- let jog = Jogador nome [] [matematicaBasica, livia  , python, fe, repProgramacao1,repProgramacao1, eanesBenevolente, robertKalley, matematicaBasica, livia, python, fe,repProgramacao1, robertKalley, eanesBenevolente, robertKalley, perdeuOnibus, python,perdeuOnibus,fe] 8000 [] [] []
- forever $ do 
-    mainMenu jog
- putStrLn "ok ne... xau"
+ let jog = Jogador nome [] [fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster, falheiEmTudo, fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster, falheiEmTudo, fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster] 8000 [] [] []
+ mainMenu jog
 
 escolher :: Int -> Jogador -> IO Jogador
 escolher n jog
@@ -25,6 +25,7 @@ escolher n jog
  |n == 2 = menuDuelo jog
  |n == 3 = gerenciaDeck jog
  |n == 4 = do 
+    putStrLn "ok ne... xau"
     return jog
 
 analisaFase :: Jogador -> [Jogador] -> [Jogador] -> IO Jogador
@@ -80,6 +81,9 @@ meuElem periodo (x:xs)
 draw :: [Carta] -> Carta
 draw deck = head deck
 
+geraMao :: [Carta] -> [Carta]
+geraMao deck = take 5 deck
+
 geraMao4 :: [Carta] -> [Carta]
 geraMao4 deck = take 4 deck
 
@@ -100,9 +104,10 @@ tudoDefesa (x:xs)
 
 batalha :: Jogador -> Jogador -> IO Jogador
 batalha jogador oponente = do
+    
     let deckEmbaralhadoJogador = concat (replicate 2 (geraDeckEmbaralhado (deck jogador)))
+    let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) deckEmbaralhadoJogador (vida jogador) (geraMao deckEmbaralhadoJogador) (replicate 5 cartaVazia) (derrotados jogador)
     let deckEmbaralhadoOponente = take 20 (drop 20 (deck oponente))
-    let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) deckEmbaralhadoJogador (vida jogador) (take 5 deckEmbaralhadoJogador) (replicate 5 cartaVazia) (derrotados jogador)
     let oponenteBatalha = Jogador (nomeJogador oponente) (colecao oponente) deckEmbaralhadoOponente (vida oponente) (geraMao4 deckEmbaralhadoOponente) (replicate 5 cartaVazia) (derrotados oponente)
 
     printCampo (vida jogadorBatalha) (vida oponenteBatalha) (cartasCampo oponenteBatalha) (cartasCampo jogadorBatalha) (mao jogadorBatalha)
@@ -466,11 +471,11 @@ printWin jogador oponente = do
 
 printLinhaCartas :: [Carta] -> String
 printLinhaCartas [] = ""
-printLinhaCartas (x:xs) = do
-    if iD x == 00 then "|  " ++ "xxx" ++ "  |" ++ printLinhaCartas xs
-    else if iD x < 10 then "|   " ++ show(iD x) ++ "   |" ++ printLinhaCartas xs
-    else if iD x < 100 then "|  " ++ show(iD x) ++ "   |" ++ printLinhaCartas xs
-    else "|  " ++ show(iD x) ++ "  |" ++ printLinhaCartas xs
+printLinhaCartas (x:xs)
+    | iD x == 00 = "|  "++ "xxx" ++ "  |" ++ printLinhaCartas xs
+    | iD x < 10 = "|   "++ show(iD x) ++ "   |" ++ printLinhaCartas xs
+    | iD x < 100 = "|  "++ show(iD x) ++ "   |" ++ printLinhaCartas xs
+    | otherwise = "|  "++ show(iD x) ++ "  |" ++ printLinhaCartas xs
 
 printCampo :: Int -> Int -> [Carta] -> [Carta] -> [Carta] -> IO()
 printCampo vidaJogador vidaOponente cartasOponente cartasJogador mao = do
@@ -795,52 +800,52 @@ drops9 = geraDeckEmbaralhado (concat (replicate 10000 [colacao, formaturaCara, t
 
 
 periodo1 :: Jogador
-periodo1 = Jogador "Primeiro periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [matematicaBasica, matematicaBasica  , python, fe, repProgramacao1,
+periodo1 = Jogador "Primeiro periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [matematicaBasica, matematicaBasica  , python, fe, repProgramacao1,
  repProgramacao1, eanesBenevolente, robertKalley, matematicaBasica, perdeuOnibus, python, fe,
   repProgramacao1, robertKalley, eanesBenevolente, robertKalley, perdeuOnibus, python,
    perdeuOnibus,fe]))) 8000 [] [] []
 
 periodo2 :: Jogador
-periodo2 = Jogador "Segundo periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [sePerdeu, empolgacao, fome, esquecimento, zeFuinha,
+periodo2 = Jogador "Segundo periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [sePerdeu, empolgacao, fome, esquecimento, zeFuinha,
  joseFernando, galdencioAmansado, conselhoEstudantil, uniao, monitorProgramacao2,
   monitorProgramacao1, repProgramacao2, programacao2,calculo1,fmcc2, fmcc1,
    esquecimento, fome, sePerdeu, empolgacao])))
  8000 [] [] []
 
 periodo3 :: Jogador
-periodo3 = Jogador "Terceiro periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [sono, colaErrada, grafos, eda, repEDA, leda, repLEDA, bd1,
+periodo3 = Jogador "Terceiro periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [sono, colaErrada, grafos, eda, repEDA, leda, repLEDA, bd1,
  roubo, luizAntonio, patriciaDuarte,areli, joseane, everton, melina, fabioJorge,colaErrada, 
  bd1, sono, repEDA]))) 8000 [] [] []
 
 periodo4 :: Jogador
-periodo4 = Jogador "Quarto periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [substituto, elmar, rohit, campelo, nervosismo, killer,
+periodo4 = Jogador "Quarto periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [substituto, elmar, rohit, campelo, nervosismo, killer,
  adalberto, sagui, namoro, preguica, linear, haskell, calculo2, substituto, elmar, rohit,
   campelo, nervosismo, killer, adalberto]))) 8000 [] [] []
 
 periodo5 :: Jogador
-periodo5 = Jogador "Quinto periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [crise, prazo, optativasDo6, estatistica, engenhariaSoft,
+periodo5 = Jogador "Quinto periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [crise, prazo, optativasDo6, estatistica, engenhariaSoft,
  repEstatistica, repEngenhariaSoft, iA, pato, cachorro, metodologiaCientifica, wifi, 
  desmotivacao, cachaca, crise, prazo, optativasDo6, estatistica, engenhariaSoft, 
  repEstatistica]))) 8000 [] [] []
 
 periodo6 :: Jogador
-periodo6 = Jogador "Sexto periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [odio, resiliente, queridinho, ritalina, depressao,gato,
+periodo6 = Jogador "Sexto periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [odio, resiliente, queridinho, ritalina, depressao,gato,
  perdido, ead, prazo, metodologiaCientifica, odio, resiliente, queridinho, ritalina,
   depressao,gato, perdido, ead, prazo, metodologiaCientifica]))) 8000 [] [] []
 
 periodo7 :: Jogador
-periodo7 = Jogador "Setimo periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [ressaca, trabalhoGrupo, treta, compiladores,
+periodo7 = Jogador "Setimo periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [ressaca, trabalhoGrupo, treta, compiladores,
  repCompiladores, sorte, iguana, dorDeCabeca, mutante, ressaca, trabalhoGrupo, treta,
   compiladores, repCompiladores, sorte, iguana, dorDeCabeca, mutante,ressaca,
    trabalhoGrupo ]))) 8000 [] [] []
 
 periodo8 :: Jogador
-periodo8 = Jogador "Oitavo periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [pcQuebrado, projetoEmComputacao1, estagio, provas3,
+periodo8 = Jogador "Oitavo periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [pcQuebrado, projetoEmComputacao1, estagio, provas3,
  amizade, vicio, cheirado, louco, brasileiro, resistente, gaudencioPossesso,pcQuebrado,
  projetoEmComputacao1, estagio, provas3, amizade, vicio, cheirado, louco, brasileiro,
  resistente]))) 8000 [] [] []
 
 periodo9 :: Jogador
-periodo9 = Jogador "Nono periodo" [] (geraDeckEmbaralhado (concat (replicate 1000 [colacao, formaturaCara, tcc, projetoEmComputacao2, emprego,
+periodo9 = Jogador "Nono periodo" [] (geraDeckEmbaralhado (concat (replicate 10000 [colacao, formaturaCara, tcc, projetoEmComputacao2, emprego,
  laguinho, greve, fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster,
   falheiEmTudo, colacao, formaturaCara, tcc, projetoEmComputacao2, emprego, laguinho])))  8000 [] [] []
