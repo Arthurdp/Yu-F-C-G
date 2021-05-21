@@ -1,3 +1,8 @@
+game:-
+    call(main),
+    halt.
+    
+
 main:-
     nl, write("  Y88b   d88P                   8888888888         d8888b              d8888b"),nl,
         write("   Y88b d88P                    888               d88P  Y88b         d88P  Y88b"), nl,
@@ -6,10 +11,19 @@ main:-
         write("      888      888   888        888               888                888  88888"), nl,
         write("      888      888   888 888888 888     888888    888    888  888888 888    888"), nl,
         write("      888      Y88b  888        888               Y88b  d88P         Y88b  d88P"), nl,
-        write("      888        Y88888         888                 Y8888P            Y8888P88"), nl.
+        write("      888        Y88888         888                 Y8888P            Y8888P88"), nl,
+        call(menuNome).
     
+inGame:-
+    call(menu),
+    call(inGame).
+
 menuNome:-
-    nl, write("Digite seu nome:").
+    nl, write("Digite seu nome: "),
+    read(X),
+    atom_concat("Bem vindo ", X, Y),
+    write(Y), nl,
+    call(inGame).
 
 menu:-
     nl, write("#   Menu   #"),nl,
@@ -17,7 +31,8 @@ menu:-
     write("[2] -> Duelo livre"), nl,
     write("[3] -> Deck"), nl,
     write("[4] -> Sair"), nl,nl,
-    write("Digite sua escolha: ").
+    write("Digite sua escolha: "),nl,
+    read(X).
 
 menuColecao:-
     nl, write("#   colecao  #"),nl,
