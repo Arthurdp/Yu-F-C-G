@@ -165,19 +165,6 @@ menuBatalha jogador oponente = do
     else
         batalhaOponente jogador oponente
 
-menuTrocaModo :: Jogador -> Jogador -> IO Jogador
-menuTrocaModo jogador oponente = do
-    printMenuAtaque jogador
-    indexCartaJogador <- getLine
-    let cartaJogador = ((cartasCampo jogador) !! (read indexCartaJogador -1))
-    if atacou cartaJogador then do
-        putStrLn "Esta carta ja atacou nao pode mais mudar de modo"
-        menuTrocaModo jogador oponente
-    else do
-        let jogadorTroca = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) ((mudaModo (cartasCampo jogador !! read indexCartaJogador)) : (removeCarta (iD ((cartasCampo jogador)!! (read indexCartaJogador))) (cartasCampo jogador))) (derrotados jogador)
-        menuBatalha jogadorTroca oponente
-
-
 menuAtaque :: Jogador -> Jogador -> IO Jogador
 menuAtaque jogador oponente = do
     printMenuAtaque jogador
@@ -791,9 +778,9 @@ drops8 = geraDeckEmbaralhado (concat (replicate 10000 [ressaca, trabalhoGrupo, t
 -- 60% 40%
 -- 9
 drops9 :: [Carta]
-drops9 = geraDeckEmbaralhado (concat (replicate 10000 [colacao, formaturaCara, tcc, projetoEmComputacao2, emprego, laguinho, greve,
+drops9 = geraDeckEmbaralhado [colacao, formaturaCara, tcc, projetoEmComputacao2, emprego, laguinho, greve,
  fimDoMundo, insonia, jacare, procurandoEmprego, poliglota, genioMaster, falheiEmTudo, ressaca,
-  trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1]))
+  trabalhoGrupo, treta, pcQuebrado, provas3, compiladores, projetoEmComputacao1]
 
 
 -- Inimigos
