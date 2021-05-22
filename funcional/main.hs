@@ -283,12 +283,6 @@ resetaAtacou :: [Carta] -> [Carta]
 resetaAtacou [] = []
 resetaAtacou (x:xs) = (alteraStatusAtacouFalse x) : (resetaAtacou xs)
 
-empateDef :: Jogador -> Jogador -> IO Jogador
-empateDef jogador oponente = do
-    printCampo (vida jogador) (vida oponente) (cartasCampo oponente) (cartasCampo jogador) (mao jogador)
-    putStr "\nAs cartas tem o mesmo nivel de forca e empataram, nenhuma foi destruida\n"
-    menuBatalha jogador oponente
-
 empateAtq :: Jogador -> Jogador -> Carta -> Carta -> IO Jogador
 empateAtq jogador oponente cartaAtacante cartaAtacada = do
     let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) (addCartaVazia (removeCarta (iD cartaAtacante) (cartasCampo jogador))) (derrotados jogador)
@@ -309,29 +303,6 @@ jogadorGanhaAtaque jogador oponente carta diferenca = do
     let oponenteBatalha = Jogador (nomeJogador oponente) (colecao oponente) (deck oponente) ((vida oponente) - diferenca) (mao oponente) (cartaVazia : (removeCarta (iD carta) (cartasCampo oponente))) (derrotados oponente)
     printCampo (vida jogador) (vida oponenteBatalha) (cartasCampo oponenteBatalha) (cartasCampo jogador) (mao jogador)
     putStr "\nSua carta ganhou a batalha . A carta do oponente foi destruida e a vida dele diminuiu :D\n"
-    testaVitoria jogador oponenteBatalha
-
-batalhaCartasDefesa :: Jogador -> Jogador -> Carta -> Carta -> IO Jogador
-batalhaCartasDefesa jogador oponente cartaAtacante cartaAtacada = do
-    let diferenca = calculaDiferenca (ataque cartaAtacante) (defesa cartaAtacada)
-    let cartaAtacou = alteraStatusAtacouTrue cartaAtacante
-    let jogadorAtacou = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) (vida jogador) (mao jogador) (cartaAtacou : (removeCarta (iD cartaAtacou) (cartasCampo jogador))) (derrotados jogador)
-    if diferenca < 0 then jogadorPerdeDefesa jogadorAtacou oponente diferenca
-    else if diferenca > 0 then jogadorGanhaDefesa jogadorAtacou oponente cartaAtacada
-    else empateDef jogadorAtacou oponente
-
-jogadorPerdeDefesa :: Jogador -> Jogador -> Int -> IO Jogador
-jogadorPerdeDefesa jogador oponente  diferenca = do
-    putStr "\nSua carta perdeu a batalha. Sua vida diminuiu ;-;\n"
-    let jogadorBatalha = Jogador (nomeJogador jogador) (colecao jogador) (deck jogador) ((vida jogador) - diferenca) (mao jogador) (cartasCampo jogador) (derrotados jogador)
-    printCampo (vida jogadorBatalha) (vida oponente) (cartasCampo oponente) (cartasCampo jogadorBatalha) (mao jogadorBatalha)
-    testaVitoria jogadorBatalha oponente
-
-jogadorGanhaDefesa :: Jogador -> Jogador -> Carta -> IO Jogador
-jogadorGanhaDefesa jogador oponente carta = do
-    putStr "Sua carta ganhou a batalha. A carta do oponente foi destruida"
-    let oponenteBatalha = Jogador (nomeJogador oponente) (colecao oponente) (deck oponente) (vida oponente) (mao oponente) (addCartaVazia (removeCarta (iD carta) (cartasCampo oponente))) (derrotados oponente)
-    printCampo (vida jogador) (vida oponenteBatalha) (cartasCampo oponenteBatalha) (cartasCampo jogador) (mao jogador)
     testaVitoria jogador oponenteBatalha
 
 calculaDiferenca :: Int -> Int -> Int
