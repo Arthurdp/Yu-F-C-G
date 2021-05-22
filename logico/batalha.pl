@@ -342,7 +342,7 @@ printCampo(VidaJ,VidaI,CampoI,CampoJ,Mao,Deck) :-
     nl,
     nl,
     length(Deck,Len),
-    write('Cartas Restantes no Deck = '), writeln(Len),
+    write('Cartas no Deck = '), writeln(Len),
     write('Vida Jogador = '), writeln(VidaJ), write('Vida Oponente = '), writeln(VidaI),
     printCampoOponente(CampoI),
     printCampoJogador(CampoJ),
