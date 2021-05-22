@@ -33,7 +33,7 @@ batalha([NomeJ,ColJ,DeckJ,VidaJ,_,_,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,_,_],JogR)
     draw5(DeckJEm,MaoJ1,DeckDrawJ),
     draw4(DeckIEm,MaoI1,DeckDrawI),
     
-    printCampo(VidaJ,VidaI,CampoI1,CampoJ1,MaoJ1),
+    printCampo(VidaJ,VidaI,CampoI1,CampoJ1,MaoJ1,DeckDrawJ),
     menuInvoc(MaoJ1),
     read(Index),
     Index1 is Index-1,
@@ -50,9 +50,9 @@ batalha([NomeJ,ColJ,DeckJ,VidaJ,_,_,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,_,_],JogR)
 batalhaJogador([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR) :-
     length(DeckJ,Len),
     Len =:= 0,
-    printLoose([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],JogR);
+    printLoose0([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],JogR);
     draw(DeckJ,MaoJ,MaoJ1,DeckDrawJ),
-    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ1),
+    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ1,DeckDrawJ),
 
     menuInvoc(MaoJ1),
     read(Index),
@@ -62,7 +62,7 @@ batalhaJogador([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,V
     meuIf(CampoJ,Carta,CampoJ1),
     
     retiraCartaIndex(MaoJ1,Index,1,MaoJ2),
-    printCampo(VidaJ,VidaI,CampoI,CampoJ1,MaoJ2),
+    printCampo(VidaJ,VidaI,CampoI,CampoJ1,MaoJ2,DeckDrawJ),
     Jog = [NomeJ,ColJ,DeckDrawJ,VidaJ,MaoJ2,CampoJ1,AtacouJ,DerrJ],
     menuBatalha(Jog,[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
 
@@ -87,7 +87,7 @@ menuBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,Vida
 
 leOpcaoBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],Op,JogR) :-
     Op =:= 1,
-    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ),
+    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ,DeckJ),
     menuAtaque([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR);
     %batalhaInimigo([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
     batalhaJogador([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
@@ -137,7 +137,7 @@ batalhaCartas([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,Vi
 
 ataqueCampoVazio([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR,AtkAtacante,IndexJ) :-
     VidaI1 is VidaI - AtkAtacante,
-    printCampo(VidaJ,VidaI1,CampoI,CampoJ,MaoJ),
+    printCampo(VidaJ,VidaI1,CampoI,CampoJ,MaoJ,DeckJ),
     add(AtacouJ,IndexJ,AtacouJ1),
     write('\nVoce atacou o inimigo diretamente e retirou -'), write(AtkAtacante), writeln('da vida dele!'),
     testaVitoria([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ1,DerrJ],[NomeI,DeckI,VidaI1,MaoI,CampoI],JogR).
@@ -147,7 +147,7 @@ jogadorGanhaAtaque([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,Dec
     Diferenca is AtkAtacante - AtkAtacada,
     VidaI1 is VidaI - Diferenca,
     retiraCartaIndex(CampoI,IndexI,0,CampoI1),
-    printCampo(VidaJ,VidaI1,CampoI1,CampoJ,MaoJ),
+    printCampo(VidaJ,VidaI1,CampoI1,CampoJ,MaoJ,DeckJ),
     add(AtacouJ,IndexJ,AtacouJ1),
     write('\nSua carta ganhou a batalha . A carta do oponente foi destruida e a vida dele diminuiu em -'), writeln(Diferenca),
     testaVitoria([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ1,DerrJ],[NomeI,DeckI,VidaI1,MaoI,CampoI1],JogR).
@@ -157,7 +157,7 @@ jogadorPerdeAtaque([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,Dec
     Diferenca is AtkAtacada - AtkAtacante,
     VidaJ1 is VidaJ - Diferenca,
     retiraCartaIndex(CampoJ,IndexJ,0,CampoJ1),
-    printCampo(VidaJ1,VidaI,CampoI,CampoJ1,MaoJ),
+    printCampo(VidaJ1,VidaI,CampoI,CampoJ1,MaoJ,DeckJ),
     write('\nSua carta perdeu a batalha . A sua carta foi destruida e a sua vida diminuiu em -'), writeln(Diferenca),
     testaVitoria([NomeJ,ColJ,DeckJ,VidaJ1,MaoJ,CampoJ1,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
 
@@ -165,7 +165,7 @@ empate([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,Mao
         JogR,IndexJ,IndexI) :-
     retiraCartaIndex(CampoJ,IndexJ,0,CampoJ1),
     retiraCartaIndex(CampoI,IndexI,0,CampoI1),
-    printCampo(VidaJ,VidaI,CampoI1,CampoJ1,MaoJ),
+    printCampo(VidaJ,VidaI,CampoI1,CampoJ1,MaoJ,DeckJ),
     writeln('\nAs cartas tem o mesmo nivel de forca e empataram, as duas foram destruidas'),
     menuBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ1,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI1],JogR).
 
@@ -183,7 +183,12 @@ testaVitoria([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,Vid
 
 printLoose([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],JogR) :-
     writeln('\n----------------------------You Loose-----------------------------'),
-    writeln('\n-----------Sua vida chegou a 0 ou suas cartas acabaram------------\n'),
+    writeln('\n-----------------------Sua vida chegou a 0------------------------\n'),
+    JogR = [NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ].
+
+printLoose0([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],JogR) :-
+    writeln('\n----------------------------You Loose-----------------------------'),
+    writeln('\n----------------------Suas cartas acabaram------------------------\n'),
     JogR = [NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ].
 
 printWin([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],NomeI,JogR) :-
@@ -199,12 +204,12 @@ printWin([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],NomeI,JogR) :-
     JogR = [NomeJ,ColJ1,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ1].
 
 erroCartaAtacou([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR) :-
-    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ),
+    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ,DeckJ),
     writeln('\nA carta que voce escolheu ja atacou... se ja atacou com todas termine seu turno'),
     menuBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
 
 erroCartaVazia([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR) :-
-    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ),
+    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ,DeckJ),
     writeln('\nVoce nao escolheu uma carta... escolha novamente'),
     menuBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
     
@@ -333,9 +338,11 @@ printLinhaCartas([H|T]) :-
     H < 100, write('|  '), write(H), write('   |'), printLinhaCartas(T);
     write('|  '), write(H), write('  |'), printLinhaCartas(T).
 
-printCampo(VidaJ,VidaI,CampoI,CampoJ,Mao) :-
-    writeln(''),
-    writeln(''),
+printCampo(VidaJ,VidaI,CampoI,CampoJ,Mao,Deck) :-
+    nl,
+    nl,
+    length(Deck,Len),
+    write('Cartas Restantes no Deck = '), writeln(Len),
     write('Vida Jogador = '), writeln(VidaJ), write('Vida Oponente = '), writeln(VidaI),
     printCampoOponente(CampoI),
     printCampoJogador(CampoJ),
