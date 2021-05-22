@@ -8,9 +8,9 @@ carta(00,'corno',10000).
 
 main :-
     Jog = ['awd',[1],[1,10,100,100,100,1,10,100,100,100,1,10,100,100,100,1,10,100,100,100],8000,[1,10,100,00,00],[1,10,100,00,00],[1]],
-    retiraCarta([1,10,100,00,00],100,Ret),
+    %trocaCarta([1,10,100,00,00],00,1,Ret),
     batalha(Jog,['awd',[],[1,10,100,100,100,1,10,100,100,100,1,10,100,100,100,1,10,100,100,100],800,[],[],[]],Jog1),
-    writeln(Ret),
+    %writeln(Ret),
     writeln(Jog1).
 
 draw5([A,B,C,D,E|T],Mao,Deck) :-
@@ -18,37 +18,37 @@ draw5([A,B,C,D,E|T],Mao,Deck) :-
     Deck = T.
 
 draw([A|T],Mao,Mao1,Deck) :-
-    trocaCartaVazia(Mao,00,A,Mao1),
+    trocaCarta(Mao,00,A,Mao1),
     Deck = T.
 
-batalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,DerrJ],[NomeI,ColI,DeckI,VidaI,MaoI,CampoI,DerrI],Jog) :- !,
+batalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,DerrJ],[NomeI,ColI,DeckI,VidaI,MaoI,CampoI,DerrI],Jog) :- 
     CampoJ1 = [00,00,00,00,00],
     CampoI1 = [00,00,00,00,00], 
     geraDeckEmbaralhado(DeckJ,DeckJEm),
     geraDeckEmbaralhado(DeckI,DeckIEm),
     draw5(DeckJEm,MaoJ1,DeckDrawJ),
     draw5(DeckIEm,MaoI1,DeckDrawI),
-
+    
     printCampo(VidaJ,VidaI,CampoI1,CampoJ1,MaoJ1),
     menuInvoc(MaoJ1),
     read(Index),
     Index1 is Index-1,
     nth0(Index1,MaoJ1,Carta),
-    trocaCartaVazia(CampoJ1,Carta,CampoJ2),
+    trocaCarta(CampoJ1,00,Carta,CampoJ2),
     retiraCartaIndex(MaoJ,Index,1,MaoJ2),
     
     printCampo(VidaJ,VidaI,CampoI1,CampoJ2,MaoJ2),
     Jog = [NomeJ,ColJ,DeckDrawJ,VidaJ,MaoJ2,CampoJ2,DerrJ].
 
-trocaCartaVazia([],_,[]) :- !. 
-trocaCartaVazia([_|T],00,Carta,L1) :- L1 = [Carta|T].
-trocaCartaVazia([H|T],00,Carta,[H|L1]) :- trocaCartaVazia(T,00,Carta,L1).
+trocaCarta([],_,_,[]) :- !. 
+trocaCarta([H|T],H,Carta,L1) :- L1 = [Carta|T].
+trocaCarta([H|T],X,Carta,[H|L1]) :- trocaCarta(T,X,Carta,L1).
 
 trocaCartaIndex([],_,_,[]) :- !. 
 trocaCartaIndex([_|T],X,X,Carta,L1) :- L1 = [Carta|T].
 trocaCartaIndex([H|T],X,N,Carta,[H|L1]) :- 
     N1 is N + 1,
-    trocaCartaIndex(T,X,N1,Carta,L1). 
+    trocaCartaIndex(T,X,N1,Carta,L1).
 
 retiraCartaIndex([],_,_,[]) :- !. 
 retiraCartaIndex([_|T],X,X,L1) :- L1 = [00|T].
@@ -130,7 +130,7 @@ printLinhaCartas([H|T]) :-
 printCampo(VidaJ,VidaI,CampoI,CampoJ,Mao) :-
     writeln(''),
     writeln(''),
-    write('\cVida Jogador = '), writeln(VidaJ), write('\cVida Oponente = '), writeln(VidaI),
+    write('Vida Jogador = '), writeln(VidaJ), write('Vida Oponente = '), writeln(VidaI),
     printCampoOponente(CampoI),
     printCampoJogador(CampoJ),
     printMao(Mao).
