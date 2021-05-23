@@ -1,4 +1,4 @@
-carta(1,'se perdeu no campus',900).
+carta(1,"se perdeu no campus",900).
 carta(2, "matematica basica", 500).
 carta(3, "Empolgação", 900).
 carta(4, "Fome", 800).
@@ -40,10 +40,10 @@ carta(37, "Roubo", 1250).
 carta(38, "Namoro", 1400).
 carta(39, "Sagui", 1400).
 carta(40, "Professor Luiz Antonio", 1200).
-carta(41, "Tio Adalberto", 1450).
+carta(41, "Professor Adalberto", 1450).
 carta(42, "Professor Killer", 1500).
 carta(43, "Professora Patricia Duarte", 1000).
-carta(44. "nervosismo", 1500).
+carta(44, "nervosismo", 1500).
 carta(45, "Professor Claudio Campelo", 1400).
 carta(46, "Professora Areli", 1100).
 carta(47, "Professor rohit", 1500).
