@@ -6,16 +6,13 @@ carta(3,'cornooo',100).
 carta(4,'cornoooo',1000).
 
 logicaAtaque(0,_,-1).
-logicaAtaque(_Carta,[],-2).
-logicaAtaque(_Carta,Lista,-2):- isCampoVazio(Lista).
-logicaAtaque(Carta, CampoJ, R):- maiorAtaque(CampoJ,K), carta(Carta,_,Atk1), carta(K,_,Atk2), Atk1 > Atk2, R is K.
-logicaAtaque(Carta, [C1|_Cn], R):- testaCartas(Carta,C1,R), R =\= 0.
-logicaAtaque(Carta,[_C1|Cn],Result):- logicaAtaque(Carta,Cn,Result ).
+logicaAtaque(_Carta, [], -1).
+logicaAtaque(_Carta,Lista,-2):- isCampoVazio(Lista), write(Lista).
+logicaAtaque(Carta, Lista, R):- achaMenor(Carta,Lista,R), R =\= -1; R = -1.
 
-testaCartas(IdI, IdJog, IdJog):- carta(IdI,_,AtaqueI), carta(IdJog,_,AtaqueJog),
-AtaqueI > AtaqueJog.
-testaCartas(IdI, IdJog, -1):- carta(IdI,_,AtaqueI), carta(IdJog,_,AtaqueJog),
-AtaqueI < AtaqueJog.
+achaMenor(_Carta,[],-1).
+achaMenor(Carta,[X|Xs],R):- carta(Carta,_,Atk1), carta(X,_,Atk2), Atk1 > Atk2, R = X;
+    achaMenor(Carta,Xs,R).
 
 maiorAtaque([], R, R).
 maiorAtaque([X|Xs], WK, R):- carta(X,_,Atk1), carta(WK,_,Atk2), Atk1 > Atk2, maiorAtaque(Xs, X, R).
@@ -49,7 +46,8 @@ ataqueCarta(Id, _CartaI, CampoJ, VidaJ, VidaJ, CampoJn):- trocaCarta(CampoJ,Id, 
 
 ataqueInimigo(Jog, [], Jog):- Jog = [_NomeJ,_ColJ,_DeckJ,_VidaJn,_MaoJ,_CampoJn,_AtacouJ,_DerrJ].
 ataqueInimigo([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[Ci|Cin], Jog):-
-    logicaAtaque(Ci, CampoJ, Id),
+    ordenaCampo(CampoJ, CampoJO),
+    logicaAtaque(Ci, CampoJO, Id),
     ataqueCarta(Id, Ci, CampoJ, VidaJ, VidaJn, CampoJn),
     ataqueInimigo([NomeJ,ColJ,DeckJ,VidaJn,MaoJ,CampoJn,AtacouJ,DerrJ], Cin, Jog).
 
@@ -76,9 +74,10 @@ batalhaInimigo([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,V
 
 
 main :-
-    Jog = ['awd',[1],[],8000,[1,2,2,1,00],[1,2,3,00,00],[],[]],
-    Ini = ['corno',[4,3,3,2,1,1,2,3,2,2,3,2],8000,[4,3,3,2,1], [0,3,3,2,1]],
+    Jog = ['awd',[1],[],8000,[1,2,2,1,00],[1,2,2,1,1],[],[]],
+    Ini = ['corno',[4,3,3,2,1,1,2,3,2,2,3,2],8000,[1,3,3,2,1], [3,3,3,2,1]],
     batalhaInimigo(Jog,Ini).
+    %logicaAtaque(1, [3,4,3,2,1], R ),
     %write(R).
 
 
