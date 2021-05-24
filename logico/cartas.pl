@@ -65,7 +65,7 @@ carta(60, "Engenharia de software", 1700).
 carta(61, "Reposição de Estatistica Aplicada", 1700).
 carta(62, "Reposição de Engenharia de Software", 1800).
 carta(63, "Inteligencia Artificial", 1800).
-carta(64. "Pato", 1700).
+carta(64, "Pato", 1700).
 carta(65, "Gato", 2000).
 carta(66, "Cachorro", 1700).
 carta(67, "Metodologia Cientifica", 1800).
