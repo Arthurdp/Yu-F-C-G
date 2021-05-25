@@ -1,4 +1,3 @@
-
 main:-
 nl, write("  Y88b   d88P                   8888888888         d8888b              d8888b"),nl,
     write("   Y88b d88P                    888               d88P  Y88b         d88P  Y88b"), nl,
@@ -35,8 +34,8 @@ menu(Jog):-
 
 mainMenu(1,Jog):- escolheInimigo(Jog, R), Ini = inimigo(R,_,_,_,_), batalha(Jog,Ini, Jog1),mainMenu(Jog1).
 mainMenu(2,Jog):- menuDuelo(Jog, Jog1),mainMenu(Jog1).
-mainMenu(3,Jog):- deck(Jog, Jog1), mainMenu(Jog1).
-mainMenu(4,Jog):- write('É... xau'),nl, halt.
+mainMenu(3,Jog):- deck(Jog).
+mainMenu(4,_):- write('É... xau'),nl, halt.
 
 
 
@@ -656,11 +655,11 @@ carta(109, "aluno que fracassou em tudo e adiquiriu resistencias incriveis", 260
 
 %deck e etc
 
-deck(Jogador, NewJogador):- exibeDeck(Jogador),
+deck(Jogador):- exibeDeck(Jogador),
     opcoesDeck(OpcaoDeck), 
-    gerenciaDeck(OpcaoDeck, Jogador, NewJogador).
+    gerenciaDeck(OpcaoDeck, Jogador).
 
-exibeDeck(Jogador):- Jogador = [_,_,Deck,_,_,_,_],
+exibeDeck(Jogador):- Jogador = [_,_,Deck,_,_,_,_,_],
     printMDeck(),
     printCartas(Deck).
 
@@ -669,7 +668,7 @@ printMDeck():- writeln('        #   DECK    #       '), nl.
 printMColecao():- writeln('        #   COLEÇÃO    #       '), nl.
 
 printCartas([]):- writeln('').
-printCartas([Cab|Cal]):- printCarta(Cab), printCartas(Cal).
+printCartas([Cab|Cal]):- printCarta(Cab),nl, printCartas(Cal).
 
 opcoesDeck(OpcaoDeck):-
     writeln('[1] -> vizualizar coleção. '),
@@ -680,43 +679,43 @@ opcoesColecao(OpcaoColecao):-
     writeln('[1] -> adicionar carta ao deck '),
     writeln('[2] -> deck'), read(OpcaoColecao).
 
-removeAdd(Jogador,Carta, R):- Jogador = [_, Colecao, Deck, _,_,_,_], 
+removeAdd(Jogador,Carta, R):- Jogador = [Nome, Colecao, Deck, Vida,Mao,Campo,Atacou,Derr], 
     member(Carta, Deck), add(Colecao, Carta, NovaColecao),
     remove(Deck, Carta, NovoDeck),
-    R = [_, NovaColecao, NovoDeck, _,_,_,_], nl,
+    R = [Nome, NovaColecao, NovoDeck, Vida,Mao,Campo,Atacou,Derr], nl,
     writeln('Carta removida do deck!'), nl.
 
 removeAdd(Jogador,_, Jogador):- nl, writeln('Você não possui esta carta.'), nl. 
 
-gerenciaDeck(1, Jogador,_):- printMColecao(),
+gerenciaDeck(1, Jogador):- printMColecao(),
     exibeColecao(Jogador),
     opcoesColecao(OpcaoColecao),
     gerenciaColecao(OpcaoColecao, Jogador).
 
-gerenciaDeck(2, Jogado,_):- writeln('Id da carta: '),
+gerenciaDeck(2, Jogador):- writeln('Id da carta: '),
     read(Id),
     removeAdd(Jogador, Id, NovoJogador), deck(NovoJogador).
 
-gerenciaDeck(3, Jogador,_):- Jogador = [_, _, Deck, _,_,_,_],
+gerenciaDeck(3, Jogador):- Jogador = [_,_,Deck,_,_,_,_,_],
     length(Deck, Len), Len < 20, nl, 
     writeln('Deck incompleto, tenha 20 cartas no deck para voltar.'), nl,
     deck(Jogador).
 
-gerenciaDeck(3, Jogador, Jogador). 
+gerenciaDeck(3, Jogador):- menu(Jogador). 
 
 gerenciaDeck(_,Jogador):- nl, writeln('Opção inválida.'),nl, deck(Jogador).
 
-exibeColecao(Jogador):- Jogador = [_,Colecao,_,_,_,_,_], printCartas(Colecao).
+exibeColecao(Jogador):- Jogador = [_,Colecao, _, _,_,_,_,_], printCartas(Colecao).
 
-addRemove(Jogador,Carta, R):- Jogador = [_, Colecao, Deck, _,_,_,_],
+addRemove(Jogador,Carta, R):- Jogador = [Nome, Colecao, Deck, Vida,Mao,Campo,Atacou,Derr],
     member(Carta, Colecao), add(Deck, Carta, NovoDeck),
     remove(Colecao, Carta, NovaColecao),
-    R = [_, NovaColecao, NovoDeck, _,_,_,_], nl,
+    R = [Nome, NovaColecao, NovoDeck, Vida,Mao,Campo,Atacou,Derr], nl,
     writeln('Carta adicionada ao deck!'), nl.
 
 addRemove(Jogador,_, Jogador):-nl,  writeln('Você não possui esta carta.'), nl. 
 
-gerenciaColecao(1, Jogador):- Jogador = [_, _, Deck, _,_,_,_],
+gerenciaColecao(1, Jogador):- Jogador = [_,_,Deck,_,_,_,_,_],
     length(Deck, Len), Len =:= 20,nl,
     writeln('Deck cheio, remova uma carta antes de adicionar outra.'),nl,
     gerenciaDeck(1, Jogador).
@@ -731,7 +730,6 @@ gerenciaColecao(2, Jogador):- deck(Jogador).
 gerenciaColecao(_,Jogador):- nl, writeln('Opção inválida.'),nl,
     gerenciaDeck(1, Jogador).
 
-add(L,X,[X|L]).
 
 
 
