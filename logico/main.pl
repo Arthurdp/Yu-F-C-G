@@ -18,11 +18,9 @@ nl, writeln("Digite seu nome: (Apenas letras Minusculas)"),
 read(X),
 atom_concat("Bem vindo ", X, Y),nl,
 write(Y), nl,
-Jog = [X,[],[999, 999, 999, 999, 999,999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999],8000,[],[],[],[]],
+Jog = [X,[],[18,7, 8,9,10, 20, 3, 24, 18,6,12, 13, 14,15, 16, 11, 17, 18, 19,20, 21, 22, 23, 24, 25, 26, 27],8000,[],[],[],[]],
 menu(Jog).
 
-tokenize("",[]).
-tokenize(I,[H|T]):-fronttoken(I,H,X),tokenize(X,T).
 
 menu(Jog):-
     nl, write("#   Menu   #"),nl,
