@@ -18,7 +18,7 @@ nl, writeln("Digite seu nome: "),
 read(X),
 atom_concat("Bem vindo ", X, Y),nl,
 write(Y), nl,
-Jog = [X,[],[1, 2, 7, 11, 3, 12, 22, 23, 2, 5, 7, 11, 12, 23, 22, 23, 5, 7, 5, 11],8000,[],[],[],[]],
+Jog = [X,[],[1, 2, 7, 11, 3, 999, 999, 999, 999, 999, 7, 11, 12, 23, 22, 23, 5, 7, 5, 11],8000,[],[],[],[]],
 menu(Jog).
 
 menu(Jog):-
@@ -39,10 +39,12 @@ mainMenu(2,Jog):- menuDuelo(Jog).
 mainMenu(3,Jog):- deck(Jog).
 mainMenu(4,_):- write('É... xau'),nl, halt.
 
+menuDuelo(Jog):-  call(printMenuDuelo), read(X), auxmenuDuelo(Jog, X).
 
-
-menuDuelo(Jog):- call(printMenuDuelo), read(X),X =:=10,menu(Jog);
-    verificaDuelo(X,Jog),batalha(Jog,X, Jog1),menu(Jog1) .
+auxmenuDuelo(Jog, X):- verificaDuelo(X,Jog);
+X =:=10, menu(Jog);
+write('opção invalida'), menuDuelo(Jog).
+    
 
 printMenuDuelo:-
 nl, write("#   escolha seu oponente  #"),nl,
@@ -59,8 +61,12 @@ nl, write("[10] -> Sair"), nl,
 nl, writeln("Digite sua opcao: ").
 
 
-verificaDuelo(X,Jog):- Jog = [_,_,_,_,_,_,_,DerrJ], member(X,DerrJ); 
-nl,write('Você não pode atacar esse oponete ainda, escolha outro.'),nl, menuDuelo(Jog).
+verificaDuelo(X,[NomeJ,ColJ,DeckDrawJ,VidaJ,MaoJ2,CampoJ2,AtacouJ,DerrJ]):- member(X,DerrJ),
+inimigo(X,DeckI,VidaI,MaoI,CampoI), Ini = [X,DeckI,VidaI,MaoI,CampoI],
+nl,write('Batalha contra o '),write(X), write('º periodo'),
+batalha([NomeJ,ColJ,DeckDrawJ,VidaJ,MaoJ2,CampoJ2,AtacouJ,DerrJ],Ini, Jog1),menu(Jog1);
+nl,write('Você não pode atacar esse oponete ainda, escolha outro.'),nl,
+ menuDuelo([NomeJ,ColJ,DeckDrawJ,VidaJ,MaoJ2,CampoJ2,AtacouJ,DerrJ]).
 
 escolheInimigo([_,_,_,_,_,_,_,[]], 1).
 escolheInimigo([_,_,_,_,_,_,_,DerrJ], R):-
@@ -529,7 +535,7 @@ drops(7, [76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93
 
 drops(8, [76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 98,96, 98, 97, 99, 100, 101, 102]).
 
-drops(9, [96, 97, 98, 99, 100, 101, 102,103, 104, 105, 106, 107, 108, 109, 76,77, 78, 79, 80, 81, 82]).
+drops(9, [96, 97, 98, 99, 100, 101, 102,103, 104, 105, 999 , 106, 107, 108, 109, 76,77, 78, 79, 80, 81, 82]).
 
 
 dropar(Ini,C1,C2,C3):- drops(Ini, Lista),
@@ -657,6 +663,7 @@ carta(106, "aluno procurando emprego antes de se formar", 2600).
 carta(107, "aluno poliglota", 2950).
 carta(108, "aluno contratado como dev pleno sem nunca ter trabalhado", 3050).
 carta(109, "aluno que fracassou em tudo e adiquiriu resistencias incriveis", 2600).
+carta(999, "EXÓDIA", 50000).
 
 %deck e etc
 
