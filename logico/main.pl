@@ -32,14 +32,17 @@ menu(Jog):-
     mainMenu(X,Jog).
 
 
-mainMenu(1,Jog):- escolheInimigo(Jog, R), Ini = inimigo(R,_,_,_,_), batalha(Jog,Ini, Jog1),mainMenu(Jog1).
-mainMenu(2,Jog):- menuDuelo(Jog, Jog1),mainMenu(Jog1).
+mainMenu(1,Jog):- escolheInimigo(Jog, R),inimigo(R,DeckI,VidaI,MaoI,CampoI),
+Ini = [R,DeckI,VidaI,MaoI,CampoI],nl,write('Batalha contra o '),write(R), write('º periodo'), 
+ batalha(Jog,Ini, Jog1),menu(Jog1).
+mainMenu(2,Jog):- menuDuelo(Jog).
 mainMenu(3,Jog):- deck(Jog).
 mainMenu(4,_):- write('É... xau'),nl, halt.
 
 
 
-menuDuelo(Jog, Jog1):- call(printMenuDuelo), read(X), verificaDuelo(X,Jog),batalha(Jog,X, Jog1).
+menuDuelo(Jog):- call(printMenuDuelo), read(X),X =:=10,menu(Jog);
+    verificaDuelo(X,Jog),batalha(Jog,X, Jog1),menu(Jog1) .
 
 printMenuDuelo:-
 nl, write("#   escolha seu oponente  #"),nl,
@@ -55,9 +58,11 @@ nl, write("[9] -> Nono periodo"),
 nl, write("[10] -> Sair"), nl,
 nl, writeln("Digite sua opcao: ").
 
-verificaDuelo(X,Jog):- Jog = [_,_,_,_,_,_,_,DerrJ], member(X,DerrJ); 
-nl,write('Você não pode atacar esse oponete ainda, escolha outro.'),nl, menuDuelo(Jog,_).
 
+verificaDuelo(X,Jog):- Jog = [_,_,_,_,_,_,_,DerrJ], member(X,DerrJ); 
+nl,write('Você não pode atacar esse oponete ainda, escolha outro.'),nl, menuDuelo(Jog).
+
+escolheInimigo([_,_,_,_,_,_,_,[]], 1).
 escolheInimigo([_,_,_,_,_,_,_,DerrJ], R):-
     max_list(DerrJ,I),I < 9, R is I + 1; R = 9.
 
@@ -239,7 +244,7 @@ printLoose0([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],JogR) :-
 
 printWin([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],NomeI,JogR) :-
     writeln('\n--------------------------------You Win-----------------------------------\n'),
-    write('\n------------------Voce derrotou o '), write(NomeI), write(' Periodo -----------------\n'),
+    write('\n------------------Voce derrotou o '), write(NomeI), write('º Periodo -----------------\n'),
     writeln('\n-------------------------Voce ganhou as cartas----------------------------\n'),
     dropar(NomeI,C1, C2, C3),
     printCarta(C1), nl,
