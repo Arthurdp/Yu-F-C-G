@@ -656,9 +656,9 @@ carta(109, "aluno que fracassou em tudo e adiquiriu resistencias incriveis", 260
 
 %deck e etc
 
-deck(Jogador):- exibeDeck(Jogador),
+deck(Jogador, NewJogador):- exibeDeck(Jogador),
     opcoesDeck(OpcaoDeck), 
-    gerenciaDeck(OpcaoDeck, Jogador).
+    gerenciaDeck(OpcaoDeck, Jogador, NewJogador).
 
 exibeDeck(Jogador):- Jogador = [_,_,Deck,_,_,_,_],
     printMDeck(),
@@ -688,19 +688,21 @@ removeAdd(Jogador,Carta, R):- Jogador = [_, Colecao, Deck, _,_,_,_],
 
 removeAdd(Jogador,_, Jogador):- nl, writeln('Você não possui esta carta.'), nl. 
 
-gerenciaDeck(1, Jogador):- printMColecao(),
+gerenciaDeck(1, Jogador,_):- printMColecao(),
     exibeColecao(Jogador),
     opcoesColecao(OpcaoColecao),
     gerenciaColecao(OpcaoColecao, Jogador).
 
-gerenciaDeck(2, Jogador):- writeln('Id da carta: '),
+gerenciaDeck(2, Jogado,_):- writeln('Id da carta: '),
     read(Id),
     removeAdd(Jogador, Id, NovoJogador), deck(NovoJogador).
 
-gerenciaDeck(3, Jogador):- Jogador = [_, _, Deck, _,_,_,_],
+gerenciaDeck(3, Jogador,_):- Jogador = [_, _, Deck, _,_,_,_],
     length(Deck, Len), Len < 20, nl, 
     writeln('Deck incompleto, tenha 20 cartas no deck para voltar.'), nl,
     deck(Jogador).
+
+gerenciaDeck(3, Jogador, Jogador). 
 
 gerenciaDeck(_,Jogador):- nl, writeln('Opção inválida.'),nl, deck(Jogador).
 
