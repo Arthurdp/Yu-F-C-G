@@ -15,9 +15,9 @@ call(menu),
 call(inGame).
 
 menuNome:-
-nl, write("Digite seu nome: "),
+nl, writeln("Digite seu nome: "),
 read(X),
-atom_concat("Bem vindo ", X, Y),
+atom_concat("Bem vindo ", X, Y),nl,
 write(Y), nl,
 Jog = [X,[],[1, 2, 7, 11, 3, 12, 22, 23, 2, 5, 7, 11, 12, 23, 22, 23, 5, 7, 5, 11],8000,[],[],[],[]],
 menu(Jog).
@@ -36,7 +36,7 @@ menu(Jog):-
 mainMenu(1,Jog):- escolheInimigo(Jog, R), Ini = inimigo(R,_,_,_,_), batalha(Jog,Ini, Jog1),mainMenu(Jog1).
 mainMenu(2,Jog):- menuDuelo(Jog, Jog1),mainMenu(Jog1).
 mainMenu(3,Jog):- deck(Jog, Jog1), mainMenu(Jog1).
-mainMenu(4,Jog):- write('É... xau'), halt.
+mainMenu(4,Jog):- write('É... xau'),nl, halt.
 
 
 
@@ -54,10 +54,10 @@ nl, write("[7] -> Setimo periodo"),
 nl, write("[8] -> Oitavo periodo"),
 nl, write("[9] -> Nono periodo"),
 nl, write("[10] -> Sair"), nl,
-nl, write("Digite sua opcao: ").
+nl, writeln("Digite sua opcao: ").
 
 verificaDuelo(X,Jog):- Jog = [_,_,_,_,_,_,_,DerrJ], member(X,DerrJ); 
-write('Você não pode atacar esse oponete ainda, escolha outro'), menuDuelo(Jog,_).
+nl,write('Você não pode atacar esse oponete ainda, escolha outro.'),nl, menuDuelo(Jog,_).
 
 escolheInimigo([_,_,_,_,_,_,_,DerrJ], R):-
     max_list(DerrJ,I),I < 9, R is I + 1; R = 9.
