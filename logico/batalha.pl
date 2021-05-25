@@ -1,13 +1,66 @@
-%batalha
+
+main:-
+nl, write("  Y88b   d88P                   8888888888         d8888b              d8888b"),nl,
+    write("   Y88b d88P                    888               d88P  Y88b         d88P  Y88b"), nl,
+    write("    Y88o88P                     888               888    888         888    888"), nl,
+    write("     Y888P     888   888        8888888           888                888"), nl,
+    write("      888      888   888        888               888                888  88888"), nl,
+    write("      888      888   888 888888 888     888888    888    888  888888 888    888"), nl,
+    write("      888      Y88b  888        888               Y88b  d88P         Y88b  d88P"), nl,
+    write("      888        Y88888         888                 Y8888P            Y8888P88"), nl,
+    call(menuNome).
+
+inGame:-
+call(menu),
+call(inGame).
+
+menuNome:-
+nl, write("Digite seu nome: "),
+read(X),
+atom_concat("Bem vindo ", X, Y),
+write(Y), nl,
+Jog = [X,[],[1, 2, 7, 11, 3, 12, 22, 23, 2, 5, 7, 11, 12, 23, 22, 23, 5, 7, 5, 11],8000,[],[],[],[]],
+menu(Jog).
+
+menu(Jog):-
+    nl, write("#   Menu   #"),nl,
+    write("[1] -> Campanha"), nl,
+    write("[2] -> Duelo livre"), nl,
+    write("[3] -> Deck"), nl,
+    write("[4] -> Sair"), nl,nl,
+    write("Digite sua escolha: "),nl,
+    read(X),
+    mainMenu(X,Jog).
 
 
-main :-
-    Jog = ['corno',[1],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],8000,[],[],[],[1]],
-    Ini = [1,[2, 2, 7, 11, 12, 12, 22, 23, 2, 5, 7, 11, 12, 23, 22, 23, 5, 7, 5, 11], 8000,[],[]],
-    batalha(Jog,Ini,_Jog1).
-    %ordenaCampo([0,0,0,0,7], R),
-    %writeln(R).
-    %writeln(Jog1).
+mainMenu(1,Jog):- escolheInimigo(Jog, R), Ini = inimigo(R,_,_,_,_), batalha(Jog,Ini, Jog1),mainMenu(Jog1).
+mainMenu(2,Jog):- menuDuelo(Jog, Jog1),mainMenu(Jog1).
+mainMenu(3,Jog):- deck(Jog, Jog1), mainMenu(Jog1).
+mainMenu(4,Jog):- write('É... xau'), halt.
+
+
+
+menuDuelo(Jog, Jog1):- call(printMenuDuelo), read(X), verificaDuelo(X,Jog),batalha(Jog,X, Jog1).
+
+printMenuDuelo:-
+nl, write("#   escolha seu oponente  #"),nl,
+nl, write("[1] -> Primeiro periodo"),
+nl, write("[2] -> Segundo periodo"),
+nl, write("[3] -> Terceiro periodo"),
+nl, write("[4] -> Quarto periodo"),
+nl, write("[5] -> Quinto periodo"),
+nl, write("[6] -> Sexto periodo"),
+nl, write("[7] -> Setimo periodo"),
+nl, write("[8] -> Oitavo periodo"),
+nl, write("[9] -> Nono periodo"),
+nl, write("[10] -> Sair"), nl,
+nl, write("Digite sua opcao: ").
+
+verificaDuelo(X,Jog):- Jog = [_,_,_,_,_,_,_,DerrJ], member(X,DerrJ); 
+write('Você não pode atacar esse oponete ainda, escolha outro'), menuDuelo(Jog,_).
+
+escolheInimigo([_,_,_,_,_,_,_,DerrJ], R):-
+    max_list(DerrJ,I),I < 9, R is I + 1; R = 9.
 
 draw5([A,B,C,D,E|T],Mao,Deck) :-
     Mao = [A,B,C,D,E],
@@ -20,12 +73,6 @@ draw4([A,B,C,D|T],Mao,Deck) :-
 draw([A|T],Mao,Mao1,Deck) :-
     trocaCarta(Mao,00,A,Mao1),
     Deck = T.
-
-
-%verificaOpcaoInvoc(MaoJ, Index1):- menuInvoc(MaoJ),read(Index),
-  %  Index =< 5, Index1 is Index-1;
-  %  writeln('Opção inválida'),nl, verificaOpcaoInvoc(MaoJ, Index1).
-
 
 
 batalha([NomeJ,ColJ,DeckJ,VidaJ,_,_,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,_,_],JogR) :- 
@@ -414,9 +461,11 @@ drawOuNao([NomeI,DeckI,VidaI,MaoI,CampoI], R):- temVazia(MaoI, Tem), Tem =:= 1, 
 
 
 ataqueCarta(-1, _CartaI, CampoJ, VidaJ, VidaJ, CampoJ). 
-ataqueCarta(-2, CartaI, CampoJ, VidaJ, VidaJn, CampoJ):- carta(CartaI,_,Atk), VidaJn is VidaJ - Atk.
+ataqueCarta(-2, CartaI, CampoJ, VidaJ, VidaJn, CampoJ):- carta(CartaI,_,Atk), VidaJn is VidaJ - Atk,nl,
+write('o oponente atacou diretamente, você perdeu '), write(Atk), write(' de vida.'), nl.
 ataqueCarta(Id, CartaI, CampoJ, VidaJ, VidaJn, CampoJn):- carta(CartaI,_,AtkI), carta(Id,_,AtkJ),Id =\=0,
-    VidaJn is (VidaJ -(AtkI - AtkJ)), trocaCarta(CampoJ,Id, 00,CampoJn).
+    VidaJn is (VidaJ -(AtkI - AtkJ)), trocaCarta(CampoJ,Id, 00,CampoJn), K is AtkI - AtkJ,nl,
+    write('O oponente destruiu sua carta e você perdeu '), write(K), write(' pontos de vida'), nl.
 
 ataqueInimigo(Jog, [], Jog):- Jog = [_NomeJ,_ColJ,_DeckJ,_VidaJn,_MaoJ,_CampoJn,_AtacouJ,_DerrJ].
 ataqueInimigo([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[Ci|Cin], Jog):-
@@ -443,8 +492,8 @@ batalhaInimigo([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,V
    trocaCarta(MaoI1,Maior, 00,MaoI2),
    attCampo(Maior, CampoI, CampoI1),
    ordenaCampo(CampoI1, CampoOrd),
+   printCampo(VidaJ,VidaI,CampoI1,CampoJ,MaoJ,DeckJ),
    ataqueInimigo([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ], CampoOrd, [NomeJAtt,ColJAtt,DeckJAtt,VidaJAtt,MaoJAtt,CampoJAtt,AtacouJAtt,DerrJAtt]),
-   printCampo(VidaJAtt,VidaI,CampoI1,CampoJAtt,MaoJAtt,DeckJAtt),
    testaVitoriaOponente([NomeJAtt,ColJAtt,DeckJAtt,VidaJAtt,MaoJAtt,CampoJAtt,AtacouJAtt,DerrJAtt],[NomeI,DeckI,VidaI,MaoI2,CampoI1],JogNew,IniNew).
 
 % inimigos e drops
@@ -604,5 +653,83 @@ carta(106, "aluno procurando emprego antes de se formar", 2600).
 carta(107, "aluno poliglota", 2950).
 carta(108, "aluno contratado como dev pleno sem nunca ter trabalhado", 3050).
 carta(109, "aluno que fracassou em tudo e adiquiriu resistencias incriveis", 2600).
+
+%deck e etc
+
+deck(Jogador):- exibeDeck(Jogador),
+    opcoesDeck(OpcaoDeck), 
+    gerenciaDeck(OpcaoDeck, Jogador).
+
+exibeDeck(Jogador):- Jogador = [_,_,Deck,_,_,_,_],
+    printMDeck(),
+    printCartas(Deck).
+
+printMDeck():- writeln('        #   DECK    #       '), nl.
+
+printMColecao():- writeln('        #   COLEÇÃO    #       '), nl.
+
+printCartas([]):- writeln('').
+printCartas([Cab|Cal]):- printCarta(Cab), printCartas(Cal).
+
+opcoesDeck(OpcaoDeck):-
+    writeln('[1] -> vizualizar coleção. '),
+    writeln('[2] -> remover carta do deck '),
+    writeln('[3] -> voltar'), read(OpcaoDeck).
+
+opcoesColecao(OpcaoColecao):- 
+    writeln('[1] -> adicionar carta ao deck '),
+    writeln('[2] -> deck'), read(OpcaoColecao).
+
+removeAdd(Jogador,Carta, R):- Jogador = [_, Colecao, Deck, _,_,_,_], 
+    member(Carta, Deck), add(Colecao, Carta, NovaColecao),
+    remove(Deck, Carta, NovoDeck),
+    R = [_, NovaColecao, NovoDeck, _,_,_,_], nl,
+    writeln('Carta removida do deck!'), nl.
+
+removeAdd(Jogador,_, Jogador):- nl, writeln('Você não possui esta carta.'), nl. 
+
+gerenciaDeck(1, Jogador):- printMColecao(),
+    exibeColecao(Jogador),
+    opcoesColecao(OpcaoColecao),
+    gerenciaColecao(OpcaoColecao, Jogador).
+
+gerenciaDeck(2, Jogador):- writeln('Id da carta: '),
+    read(Id),
+    removeAdd(Jogador, Id, NovoJogador), deck(NovoJogador).
+
+gerenciaDeck(3, Jogador):- Jogador = [_, _, Deck, _,_,_,_],
+    length(Deck, Len), Len < 20, nl, 
+    writeln('Deck incompleto, tenha 20 cartas no deck para voltar.'), nl,
+    deck(Jogador).
+
+gerenciaDeck(_,Jogador):- nl, writeln('Opção inválida.'),nl, deck(Jogador).
+
+exibeColecao(Jogador):- Jogador = [_,Colecao,_,_,_,_,_], printCartas(Colecao).
+
+addRemove(Jogador,Carta, R):- Jogador = [_, Colecao, Deck, _,_,_,_],
+    member(Carta, Colecao), add(Deck, Carta, NovoDeck),
+    remove(Colecao, Carta, NovaColecao),
+    R = [_, NovaColecao, NovoDeck, _,_,_,_], nl,
+    writeln('Carta adicionada ao deck!'), nl.
+
+addRemove(Jogador,_, Jogador):-nl,  writeln('Você não possui esta carta.'), nl. 
+
+gerenciaColecao(1, Jogador):- Jogador = [_, _, Deck, _,_,_,_],
+    length(Deck, Len), Len =:= 20,nl,
+    writeln('Deck cheio, remova uma carta antes de adicionar outra.'),nl,
+    gerenciaDeck(1, Jogador).
+
+gerenciaColecao(1, Jogador):- writeln('Id da carta: '),
+    read(Id),
+    addRemove(Jogador,Id, NovoJogador),
+    deck(NovoJogador).
+
+gerenciaColecao(2, Jogador):- deck(Jogador).
+
+gerenciaColecao(_,Jogador):- nl, writeln('Opção inválida.'),nl,
+    gerenciaDeck(1, Jogador).
+
+add(L,X,[X|L]).
+
 
 
