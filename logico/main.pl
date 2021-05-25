@@ -14,12 +14,15 @@ call(menu),
 call(inGame).
 
 menuNome:-
-nl, writeln("Digite seu nome: "),
+nl, writeln("Digite seu nome: (Apenas letras Minusculas)"),
 read(X),
 atom_concat("Bem vindo ", X, Y),nl,
 write(Y), nl,
-Jog = [X,[],[1, 2, 7, 11, 3, 999, 999, 999, 999, 999, 7, 11, 12, 23, 22, 23, 5, 7, 5, 11],8000,[],[],[],[]],
+Jog = [X,[],[999, 999, 999, 999, 999,999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999],8000,[],[],[],[]],
 menu(Jog).
+
+tokenize("",[]).
+tokenize(I,[H|T]):-fronttoken(I,H,X),tokenize(X,T).
 
 menu(Jog):-
     nl, write("#   Menu   #"),nl,
@@ -29,7 +32,8 @@ menu(Jog):-
     write("[4] -> Sair"), nl,nl,
     write("Digite sua escolha: "),nl,
     read(X),
-    mainMenu(X,Jog).
+    verificador(X,[1,2,3,4], Certa),
+    mainMenu(Certa,Jog).
 
 
 mainMenu(1,Jog):- escolheInimigo(Jog, R),inimigo(R,DeckI,VidaI,MaoI,CampoI),
@@ -39,12 +43,13 @@ mainMenu(2,Jog):- menuDuelo(Jog).
 mainMenu(3,Jog):- deck(Jog).
 mainMenu(4,_):- write('É... xau'),nl, halt.
 
-menuDuelo(Jog):-  call(printMenuDuelo), read(X), auxmenuDuelo(Jog, X).
+menuDuelo(Jog):-  call(printMenuDuelo), read(X), verificador(X,[1,2,3,4,5,6,7,8,9,10], Certa), auxmenuDuelo(Jog, Certa).
 
-auxmenuDuelo(Jog, X):- verificaDuelo(X,Jog);
-X =:=10, menu(Jog);
-write('opção invalida'), menuDuelo(Jog).
-    
+auxmenuDuelo(Jog, X):- 
+    X =:=10, menu(Jog);
+    verificaDuelo(X,Jog);
+    write('opção invalida'), menuDuelo(Jog).
+
 
 printMenuDuelo:-
 nl, write("#   escolha seu oponente  #"),nl,
@@ -95,8 +100,9 @@ batalha([NomeJ,ColJ,DeckJ,VidaJ,_,_,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,_,_],JogR)
     printCampo(VidaJ,VidaI,CampoI1,CampoJ1,MaoJ1,DeckDrawJ),
     menuInvoc(MaoJ1),
     read(Index),
-    Index1 is Index-1,
-    nth0(Index1,MaoJ1,Carta),
+    verificador(Index,[1,2,3,4,5],Certa),
+    Certa1 is Certa -1,
+    nth0(Certa1,MaoJ1,Carta),
     trocaCarta(CampoJ1,00,Carta,CampoJ2),
     retiraCartaIndex(MaoJ1,Index,1,MaoJ2),
     
@@ -114,14 +120,22 @@ batalhaJogador([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,V
 
     menuInvoc(MaoJ1),
     read(Index),
-    Index1 is Index-1,
-    nth0(Index1,MaoJ1,Carta),
+    verificador(Index,[1,2,3,4,5],Certa),
+    Certa1 is Certa -1,
+    nth0(Certa1,MaoJ1,Carta),
 
     meuIf(CampoJ,Carta,CampoJ1),
-    retiraCartaIndex(MaoJ1,Index,1,MaoJ2),
+    retiraCartaIndex(MaoJ1,Certa,1,MaoJ2),
     printCampo(VidaJ,VidaI,CampoI,CampoJ1,MaoJ2,DeckDrawJ),
     Jog = [NomeJ,ColJ,DeckDrawJ,VidaJ,MaoJ2,CampoJ1,AtacouJ,DerrJ],
     menuBatalha(Jog,[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
+
+verificador(Op,Lista,Certa) :-
+    member(Op,Lista),
+    Certa is Op;
+    writeln("Opcao Invalida. Escolha novamente..."),
+    read(Op1),
+    verificador(Op1,Lista,Certa).
 
 meuIf(CampoJ,Carta,CampoJ1) :-
     isCampoCheio(CampoJ),
@@ -130,8 +144,9 @@ meuIf(CampoJ,Carta,CampoJ1) :-
 
 campoCheio(Campo,Carta,Campo1) :-
     menuCampoCheio(Campo),read(Index),
-    Index1 is Index-1,
-    trocaCartaIndex(Campo,Index1,0,Carta,Campo1).
+    verificador(Index,[1,2,3,4,5],Certa),
+    Certa1 is Certa -1,
+    trocaCartaIndex(Campo,Certa1,0,Carta,Campo1).
 
 isCampoCheio([]).
 isCampoCheio([H|T]) :-
@@ -140,7 +155,8 @@ isCampoCheio([H|T]) :-
 menuBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR) :-
     printMenuAtaqueOpcoes(),
     read(Op),
-    leOpcaoBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],Op,JogR).
+    verificador(Op,[1,2],Certa),
+    leOpcaoBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],Certa,JogR).
 
 leOpcaoBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],Op,JogR) :-
     Op =:= 1,
@@ -153,9 +169,10 @@ menuAtaque([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI
     printMenuAtaqueCampo(CampoJ,CampoI,AtacouJ),
     writeln('\nEscolha uma carta do seu campo: '),
     read(Index),
-    Index1 is Index-1,
-    nth0(Index1,CampoJ,Carta),
-    testaAtacou([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR,Carta,Index1).
+    verificador(Index,[1,2,3,4,5],Certa),
+    Certa1 is Certa -1,
+    nth0(Certa1,CampoJ,Carta),
+    testaAtacou([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR,Carta,Certa1).
 
 testaAtacou([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR,Id,IndexJ) :-
     member(IndexJ, AtacouJ),
@@ -166,11 +183,12 @@ testaAtacou([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,Vida
     ;
     writeln('Escolha uma carta do campo do inimigo: '),
     read(Index),
-    Index1 is Index-1,
-    nth0(Index1,CampoI,CartaI),
+    verificador(Index,[1,2,3,4,5],Certa),
+    Certa1 is Certa -1,
+    nth0(Certa1,CampoI,CartaI),
     carta(Id,_,AtkAtacante), carta(CartaI,_,AtkAtacada),
     batalhaCartas([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],
-        JogR,AtkAtacante,AtkAtacada,CartaI,IndexJ,Index1).
+        JogR,AtkAtacante,AtkAtacada,CartaI,IndexJ,Certa1).
 
 batalhaCartas([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],
         JogR,AtkAtacante,AtkAtacada,CartaI,IndexJ,IndexI) :- 
@@ -261,13 +279,11 @@ printWin([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],NomeI,JogR) :-
     JogR = [NomeJ,ColJ3,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ1].
 
 erroCartaAtacou([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR) :-
-    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ,DeckJ),
-    writeln('\nA carta que voce escolheu ja atacou... se ja atacou com todas termine seu turno'),
+    writeln('A carta que voce escolheu ja atacou... se ja atacou com todas termine seu turno'),
     menuBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
 
 erroCartaVazia([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR) :-
-    printCampo(VidaJ,VidaI,CampoI,CampoJ,MaoJ,DeckJ),
-    writeln('\nVoce nao escolheu uma carta... escolha novamente'),
+    writeln('Voce nao escolheu uma carta... escolha novamente'),
     menuBatalha([NomeJ,ColJ,DeckJ,VidaJ,MaoJ,CampoJ,AtacouJ,DerrJ],[NomeI,DeckI,VidaI,MaoI,CampoI],JogR).
     
 add(L,X,[X|L]).
@@ -715,7 +731,7 @@ gerenciaDeck(3, Jogador):- Jogador = [_,_,Deck,_,_,_,_,_],
 
 gerenciaDeck(3, Jogador):- menu(Jogador). 
 
-gerenciaDeck(_,Jogador):- nl, writeln('Opção inválida.'),nl, deck(Jogador).
+gerenciaDeck(_,Jogador):- nl, writeln('Opção inválida. Escolha novamente...'),nl, deck(Jogador).
 
 exibeColecao(Jogador):- Jogador = [_,Colecao, _, _,_,_,_,_], printCartas(Colecao).
 
@@ -725,7 +741,7 @@ addRemove(Jogador,Carta, R):- Jogador = [Nome, Colecao, Deck, Vida,Mao,Campo,Ata
     R = [Nome, NovaColecao, NovoDeck, Vida,Mao,Campo,Atacou,Derr], nl,
     writeln('Carta adicionada ao deck!'), nl.
 
-addRemove(Jogador,_, Jogador):-nl,  writeln('Você não possui esta carta.'), nl. 
+addRemove(Jogador,_, Jogador):-nl,  writeln('Você não possui esta carta. '), nl. 
 
 gerenciaColecao(1, Jogador):- Jogador = [_,_,Deck,_,_,_,_,_],
     length(Deck, Len), Len =:= 20,nl,
@@ -739,7 +755,7 @@ gerenciaColecao(1, Jogador):- writeln('Id da carta: '),
 
 gerenciaColecao(2, Jogador):- deck(Jogador).
 
-gerenciaColecao(_,Jogador):- nl, writeln('Opção inválida.'),nl,
+gerenciaColecao(_,Jogador):- nl, writeln('Opção inválida. Escolha novamente...'),nl,
     gerenciaDeck(1, Jogador).
 
 
